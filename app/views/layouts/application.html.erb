@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Escalat</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "custom", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/bootstrap.css">
+  <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+  <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+  <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/dark.css">
+</head>
+<body>
+
+  <div id="app">
+    
+    <% unless current_user.nil? %>
+
+      <div id="sidebar" class="active">
+        <div class="sidebar-wrapper active">
+          <div class="sidebar-header">
+            <div class="d-flex justify-content-between">
+              <div class="logo">
+                <a href="/"><img src="/assets/images/logo/logo.png" alt="Logo" srcset=""></a>
+              </div>
+              <div class="toggler">
+                <img src="/assets/images/moon-solid.svg" class="dark">
+                <img src="/assets/images/sun-solid.svg" class="light">
+                <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="sidebar-menu">
+          <ul class="menu">
+            <li class="sidebar-title">Menu</li>
+
+            <li class="sidebar-item active">
+              <a href="/agendas" class='sidebar-link'>
+                <i class="fa-5 fa fa-calendar"></i>
+                <span>Agendas</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="/pacientes" class='sidebar-link'>
+                <i class="fs-5 fa fa-user"></i>
+                <span>Pacientes</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="/atendimentos" class='sidebar-link'>
+                <i class="bi bi-file-earmark-medical-fill"></i>
+                <span>Atendimentos</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item  has-sub">
+              <a href="#" class='sidebar-link'>
+                <i class="bi bi-stack"></i>
+                <span>Configurações</span>
+              </a>
+              <ul class="submenu ">
+                <li class="submenu-item ">
+                  <%= link_to 'Estabelecimentos', estabelecimentos_path %>
+                </li>
+                <li class="submenu-item ">
+                  <a href="/users">Usuários()</a>
+                </li>
+                <li class="submenu-item ">
+                  <a href="/unidades">Unidades()</a>
+                </li>
+                <li class="submenu-item ">
+                  <a href="/recursos">Equipes()</a>
+                </li>
+              </ul>
+            </li>
+
+            <hr>
+
+            <% if current_user.nil? %>
+              <li class="sidebar-item">
+                <a href="#" class='sidebar-link'>
+                  <i class="bi bi-stack"></i>
+                  <span><%= link_to "Conectar", new_user_session_path %>
+                </a>
+              </li>
+            <% else %>
+              <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link avatar'>
+                  <img src="/assets/images/faces/1.jpg" alt="" srcset="">
+                  <span> <%= current_user.name unless current_user.nil? %> </span>
+                </a>
+
+                <ul class="submenu ">
+                  <li class="submenu-item ">
+                    <a href="/users/edit">Alterar</a>
+                  </li>
+                  <li class="submenu-item ">
+                    <%= link_to "Registrar", new_user_registration_path %>
+                  </li>
+                  <li class="submenu-item ">
+                    <%= link_to "Desconectar", destroy_user_session_path, "data-turbo-method": :delete, :class => 'dropdown-item' %>
+                  </li>
+                </ul>
+              </li>
+            <% end %>
+
+            <hr>       
+            <li class="sidebar-item active ">
+              <a href="https://technext.github.io/mazer/index.html" class='sidebar-link'>
+                <i class="bi bi-grid-fill"></i>
+                <span>Exemplos Mazer</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+      </div>
+
+    <% end %>
+        
+      <div id="main">
+        <header class="mb-3">
+          <a href="#" class="burger-btn d-block d-xl-none">
+            <i class="bi bi-justify fs-3"></i>
+          </a>
+        </header>
+
+        <%= yield %>
+
+        <footer>
+          <div class="footer clearfix mb-0 text-muted">
+            <div class="float-start">
+              <p>2022 &copy; Escalat</p>
+            </div>
+            <div class="float-end">
+              <p>Criado com <span class="text-danger"><i class="bi bi-heart"></i></span> por 
+                <a href="http://www.inovadora.com.br">Rabbit's</a> layout Mazer <a href="http://ahmadsaugi.com">A. Saugi</a> 
+              </p>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/js/dark.js"></script>
+  <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+  <script src="/assets/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <!-- <script src="/assets/vendors/apexcharts/apexcharts.js"></script>
+  <script src="/assets/js/pages/dashboard.js"></script>
+  -->
+  <script src="/assets/js/mazer.js"></script>
+
+</body>
+
+</html>

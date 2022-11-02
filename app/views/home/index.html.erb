@@ -1,0 +1,17 @@
+<h1>Home#index</h1>
+
+<p>Find me in app/views/home/index.html.erb</p>
+
+<% if current_user %>
+  <p>Olá <%= current_user.email %></p>
+  <p>Seja bem vindo ao Psico2022, aqui você pode controlar os atendimentos do seu consultório</p>
+  <p>Você pode 
+  <%= link_to "desconectar aqui", destroy_user_session_path, "data-turbo-method": :delete %>
+  <p>Você pode cadastrar um novo usuário 
+  <%= link_to "aqui", new_user_registration_path, data: { turbo: false } %>
+  </p>
+<% else %>
+  <p>Você não está logado</p>
+  <p><%= link_to "Registrar-se", new_user_registration_path %>
+  <p><%= link_to "Logar", new_user_session_path %>
+<% end %>

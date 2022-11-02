@@ -1,0 +1,146 @@
+<div class="page-heading">
+  <div class="page-title">
+    <div class="row">
+      <div class="col-12 col-md-6 order-md-1 order-last">
+        <h3><%= acao %> Estabelecimento de Saúde</h3>
+        <p class="text-subtitle text-muted"><%= subtitle %></p>
+      </div>
+      <div class="col-12 col-md-6 order-md-2 order-first">
+        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item active"><%= link_to "Voltar", estabelecimentos_path %> </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+
+
+<%= form_with(model: estabelecimento) do |form| %>
+  <% if estabelecimento.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(estabelecimento.errors.count, "error") %> prohibited this estabelecimento from being saved:</h2>
+
+      <ul>
+        <% estabelecimento.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <section id="multiple-column-form">
+    <div class="row match-height">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <form class="form">
+                <div class="row">
+                  <div class="form-group col-12">
+                    <h5>Estabelecimento</h5>
+                    <div class="form-group">
+                      <%= form.text_field :nome, class: "form-control", placeholder: "Nome do estabelecimento", title: "Nome do estabelecimento", required: true %>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <%= form.text_field :cnpj, class: "form-control", minlength:19, maxlength:19, onkeypress:"$(this).mask('00.000.000/0000-00')", placeholder: "CNPJ", title: "CNPJ do estabelecimento", required: true %>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <%= form.text_field :cnes, class: "form-control", placeholder: "CNES", title: "CNES do estabelecimento" %>
+                    </div>
+                  </div>
+                  <p>
+                  <h5>Endereço</h5>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <%= form.text_field :endereco, class: "form-control", placeholder: "Rua Exemplo", title: "Logradouro" %>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <%= form.text_field :end_numero, class: "form-control", placeholder: "Número", title: "Número do endereço" %>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <%= form.text_field :bairro, class: "form-control", placeholder: "Bairro", title: "Bairro" %>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <%= form.text_field :cep , class: "form-control", placeholder: "CEP", title: "CEP" %>
+                    </div>
+                  </div>
+                  <div data-controller="uf">
+                    <div class="col-md-6 col-12">
+                      <div class="form-group">
+                        <%= form.select :uf, Uf.order(:nome).collect {|i| [ i.nome, i.id ] }, { prompt: 'Selecione um UF'}, { class: "form-control form-select", data: { action: "change->uf#change" } } %>
+                       </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <div class="form-group">
+                        <%= form.select :cidade, @cidades, { prompt: 'Selectione uma cidade'}, { class: "form-control form-select", data: { uf_target: "cidadeSelect"}, placeholder: "Cidade", title: "Cidade", required: true } %>
+                      </div>
+                    </div>
+                  </div>
+                  <p>
+                  <h5>Acesso a API de integração</h5>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <%= form.text_field :api_usuario, class: "form-control", placeholder: "Usuário", title: "Usuário para acesso a API" %>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <%= form.text_field :api_senha, class: "form-control", placeholder: "Senha", title: "Senha para acesso a API" %>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <%= form.text_field :api_url, class: "form-control", placeholder: "URL", title: "Endereço URL da API" %>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <button type="teste" class="btn btn-light-secondary me-1 mb-1">Testar Conexão</button>
+                    </div>
+                  </div>
+
+                  <div class="col-12 d-flex justify-content-end">
+                    <%= form.submit "Gravar", class: "btn btn-primary me-1 mb-1" %>
+                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                  </div>
+                </div>
+              </form>
+              <% if acao == "Edita" %>
+                <div>
+                  <%= link_to "Mostrar Estabelecimento", @estabelecimento %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+

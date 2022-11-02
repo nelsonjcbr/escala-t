@@ -1,0 +1,129 @@
+<div id="<%= dom_id estabelecimento %>">
+
+<section id="caixa-inteira">
+  <div class="row match-height">
+    <div class="col-12">
+
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">        
+            <%= estabelecimento.nome %>
+          </h4>
+        </div>
+        <div class="card-body"> 
+
+          <div class="row">
+            <div class="col-md-2">
+              <label>CNPJ:</label>
+            </div>
+            <div class="col-md-4">
+              <strong><%= estabelecimento.cnpj %></strong>
+            </div>
+
+            <div class="col-md-2">
+              <label>CNES:</label>
+            </div>
+            <div class="col-md-4">
+              <strong><%= estabelecimento.cnes %></strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="duas-caixas">
+  <div class="row match-height">
+    <div class="col-md-6 col-12">
+
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Endereço</h4>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-md-3">
+              <label>Logradouro:</label>
+            </div>
+            <div class="col-md-9">
+              <strong><%= estabelecimento.endereco %></strong>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-md-3">
+              <label>Número:</label>
+            </div>
+            <div class="col-md-9">
+              <strong><%= estabelecimento.end_numero %></strong>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3">
+              <label>Bairro:</label>
+            </div>
+            <div class="col-md-9">
+              <strong><%= estabelecimento.bairro %></strong>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3">
+              <label>CEP:</label>
+            </div>
+            <div class="col-md-9">
+              <strong><%= estabelecimento.cep %></strong>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3">
+              <label>Cidade:</label>
+            </div>
+            <div class="col-md-9">
+              <strong><%= "#{estabelecimento.cidade}(#{estabelecimento.uf})" %></strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-12">
+
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Acesso a API</h4>
+        </div>
+        <div class="card-body"> 
+
+          <div class="row">
+            <div class="col-md-4">
+              <label>URL:</label>
+           </div>
+            <div class="col-md-8">
+              <strong><%= estabelecimento.api_url %></strong>
+           </div>
+         </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <label>Usuário:</label>
+            </div>
+            <div class="col-md-8">
+              <strong><%= estabelecimento.api_usuario %></strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="col-12 d-flex justify-content-end">
+  <%= link_to "Editar", edit_estabelecimento_path(@estabelecimento), class: "btn btn-primary me-1 mb-1" %>
+  <%= button_to "Excluir", @estabelecimento, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger me-1 mb-1" %>
+</div>
+

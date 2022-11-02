@@ -1,0 +1,12 @@
+Documentação em https://docs.google.com/document/d/12v5aIulVxBwWhy-LNoc5pY61X2nMZEgLqxlesuOhHCM/edit#
+
+Disponobilizar aplicação local na web, ver https://www.sitepoint.com/accessing-localhost-from-anywhere/
+(ngrok, pagekite, localtunel, browserstack)
+
+Instalei o ngrok https://ngrok.com/download
+
+ngrok config add-authtoken 2Czn2BB88h1ESFsN7hZwLroEt18_98wvFoncRrLKBE51DoUY
+
+ngrok http 3000
+(vai mostrar a url que tem que rodar)
+
