@@ -1,5 +1,7 @@
 class EstabelecimentosController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_estabelecimento, only: %i[ show edit update destroy ]
+  before_action :carrega_cidades, only: %i[ new edit update create ]
 
   # GET /estabelecimentos or /estabelecimentos.json
   def index
@@ -13,13 +15,11 @@ class EstabelecimentosController < ApplicationController
   # GET /estabelecimentos/new
   def new
     @estabelecimento = Estabelecimento.new
-    @cidades = [] 
     #@cidades = Cidade.order(:nome).where(uf: uf_sel).collect {|i| [ i.nome, i.id ] } 
   end
 
   # GET /estabelecimentos/1/edit
   def edit
-    @cidades = [] 
   end
 
   # POST /estabelecimentos or /estabelecimentos.json
@@ -66,7 +66,6 @@ class EstabelecimentosController < ApplicationController
     
     respond_to do |format|
       format.turbo_stream
-
     end
   end
 
@@ -76,8 +75,16 @@ class EstabelecimentosController < ApplicationController
       @estabelecimento = Estabelecimento.find(params[:id])
     end
 
+    def carrega_cidades
+      if @estabelecimento.nil? || @estabelecimento.uf_id.nil?
+        @cidades = []
+      else  
+        @cidades = Cidade.order(:nome).where(uf: @estabelecimento.uf_id).collect {|i| [ i.nome, i.id ] } 
+      end
+    end
+
     # Only allow a list of trusted parameters through.
     def estabelecimento_params
-      params.require(:estabelecimento).permit(:nome, :cnpj, :cnes, :endereco, :end_numero, :bairro, :cidade, :uf, :cep, :api_url, :api_usuario, :api_senha)
+      params.require(:estabelecimento).permit(:nome, :cnpj, :cnes, :endereco, :end_numero, :bairro, :uf_id, :cidade_id, :cep, :api_url, :api_usuario, :api_senha)
     end
 end

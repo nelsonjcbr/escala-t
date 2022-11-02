@@ -52,7 +52,7 @@
                   </div>
                   <div class="col-md-6 col-12">
                     <div class="form-group">
-                      <%= form.text_field :cnpj, class: "form-control", minlength:19, maxlength:19, onkeypress:"$(this).mask('00.000.000/0000-00')", placeholder: "CNPJ", title: "CNPJ do estabelecimento", required: true %>
+                      <%= form.text_field :cnpj, class: "form-control", minlength:18, maxlength:18, onkeypress:"$(this).mask('00.000.000/0000-00')", placeholder: "CNPJ", title: "CNPJ do estabelecimento", required: true %>
                     </div>
                   </div>
                   <div class="col-md-6 col-12">
@@ -79,18 +79,18 @@
                   </div>
                   <div class="col-md-6 col-12">
                     <div class="form-group">
-                      <%= form.text_field :cep , class: "form-control", placeholder: "CEP", title: "CEP" %>
+                      <%= form.text_field :cep , class: "form-control", minlength:9, maxlength:9, onkeypress:"$(this).mask('00000-000')", placeholder: "CEP", title: "CEP" %>
                     </div>
                   </div>
                   <div data-controller="uf">
                     <div class="col-md-6 col-12">
                       <div class="form-group">
-                        <%= form.select :uf, Uf.order(:nome).collect {|i| [ i.nome, i.id ] }, { prompt: 'Selecione um UF'}, { class: "form-control form-select", data: { action: "change->uf#change" } } %>
+                        <%= form.select :uf_id, Uf.order(:nome).collect {|i| [ i.nome, i.id ] }, { prompt: 'Selecione um UF'}, { class: "form-control form-select", data: { action: "change->uf#change" } } %>
                        </div>
                     </div>
                     <div class="col-md-6 col-12">
                       <div class="form-group">
-                        <%= form.select :cidade, @cidades, { prompt: 'Selectione uma cidade'}, { class: "form-control form-select", data: { uf_target: "cidadeSelect"}, placeholder: "Cidade", title: "Cidade", required: true } %>
+                        <%= form.select :cidade_id, @cidades, { prompt: 'Selecione uma cidade'}, { class: "form-control form-select", data: { uf_target: "cidadeSelect"}, placeholder: "Cidade", title: "Cidade", required: true } %>
                       </div>
                     </div>
                   </div>

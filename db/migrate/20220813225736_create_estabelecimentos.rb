@@ -8,6 +8,7 @@ class CreateEstabelecimentos < ActiveRecord::Migration[7.0]
       t.string :end_numero
       t.string :complemento
       t.string :bairro
+      t.references :uf, null: false, foreign_key: true
       t.references :cidade, null: false, foreign_key: true
       t.string :cep
       t.string :api_url

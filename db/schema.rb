@@ -14,13 +14,31 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_13_225736) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "addresses", force: :cascade do |t|
+    t.string "country"
+    t.string "state"
+    t.string "city"
+    t.string "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "cidades", force: :cascade do |t|
     t.string "nome"
     t.bigint "uf_id", null: false
     t.integer "ibge"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["uf_id"], name: "index_cidades_on_uf_id"
+  end
+
+  create_table "cidadess", id: false, force: :cascade do |t|
+    t.bigint "id"
+    t.string "nome"
+    t.bigint "uf_id"
+    t.integer "ibge"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "estabelecimentos", force: :cascade do |t|
@@ -31,6 +49,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_13_225736) do
     t.string "end_numero"
     t.string "complemento"
     t.string "bairro"
+    t.bigint "uf_id", null: false
     t.bigint "cidade_id", null: false
     t.string "cep"
     t.string "api_url"
@@ -39,6 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_13_225736) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cidade_id"], name: "index_estabelecimentos_on_cidade_id"
+    t.index ["uf_id"], name: "index_estabelecimentos_on_uf_id"
   end
 
   create_table "ufs", force: :cascade do |t|
@@ -61,4 +81,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_13_225736) do
 
   add_foreign_key "cidades", "ufs"
   add_foreign_key "estabelecimentos", "cidades"
+  add_foreign_key "estabelecimentos", "ufs"
 end
