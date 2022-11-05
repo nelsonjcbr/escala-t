@@ -23,12 +23,17 @@
           <strong><%= estabelecimento.cnes %></strong>
         </div>
       </div>
-     <div class="row">
+      <div class="row">
         <div class="col-md-3">
           <label>Cidade:</label>
         </div>
         <div class="col-md-9">
             <strong><%= estabelecimento.cidade_uf %></strong>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label><%= link_to "Unidades (#{estabelecimento.unidades.size})", estabelecimento_unidades_url(estabelecimento) %></label>
         </div>
       </div>
     </div>

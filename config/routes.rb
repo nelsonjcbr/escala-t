@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     collection do
       get :cidades
     end
+    resources :unidades
   end
   devise_for :users
   resources :users
