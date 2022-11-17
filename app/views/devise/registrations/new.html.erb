@@ -17,10 +17,56 @@
                     </div>
                 </div>
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <%= f.text_field :name, autofocus: true, autocomplete: "nome", placeholder: "Nome",  class: "form-control form-control-xl"%>
+                    <%= f.text_field :cpf, autofocus: true, autocomplete: "cpf", placeholder: "CPF",  class: "form-control form-control-xl"%>
+                    <div class="form-control-icon">
+                        <i class="bi bi-backspace-reverse"></i>
+                    </div>
+                </div>
+                <div class="form-group position-relative has-icon-left mb-4">
+                    <%= f.text_field :name, autofocus: true, autocomplete: "nome", placeholder: "Nome Completo",  class: "form-control form-control-xl"%>
                     <div class="form-control-icon">
                         <i class="bi bi-people"></i>
                     </div>
+                </div>
+                <div class="form-group position-relative has-icon-left mb-4">
+                    <%= f.text_field :nome_chamado, autofocus: true, autocomplete: "nome_chamado", placeholder: "Nome como é chamado",  class: "form-control form-control-xl"%>
+                    <div class="form-control-icon">
+                        <i class="bi bi-person"></i>
+                    </div>
+                </div>
+                <div class="form-group position-relative has-icon-left mb-4">
+                    <%= f.select :sexo, [['Masculino', 'M'],['Feminino', 'F']], { prompt: 'Selecione o sexo'}, { class: "form-control form-control-xl", autofocus: true, autocomplete: "sexo", placeholder: "Sexo"  } %>
+                    <div class="form-control-icon">
+                        <i class="bi bi-gender-ambiguous"></i>
+                    </div>
+                </div>
+                <div class="form-group position-relative has-icon-left mb-4">
+                    <%= f.text_field :profissao, autofocus: true, autocomplete: "profissao", placeholder: "Profissão",  class: "form-control form-control-xl"%>
+                    <div class="form-control-icon">
+                        <i class="bi bi-gender-ambiguous"></i>
+                    </div>
+                </div>
+
+                <div class="row">
+                  <h5>Conselho de classe</h5>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group position-relative has-icon-left mb-4">
+                        <%= f.select :conselhoclass_id, Conselhoclass.ordenado.collect { |i| [i.sigla, i.id] }, { prompt: 'Sigla'}, { autofocus: true, autocomplete: "conselhoclass_id", placeholder: "Conselho de classe",  class: "form-control form-control-xl" } %>
+                        <div class="form-control-icon">
+                            <i class="bi bi-gender-ambiguous"></i>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group position-relative has-icon-left mb-4">
+                        <%= f.text_field :numero_conselho, autofocus: true, autocomplete: "numero_conselho", placeholder: "Número",  class: "form-control form-control-xl"%>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group position-relative has-icon-left mb-4">
+                        <%= f.select :uf_conselho_id, Uf.order(:nome).collect {|i| [ i.sigla, i.id ] }, { prompt: 'UF'}, { autofocus: true, autocomplete: "UF", placeholder: "UF",  class: "form-control form-control-xl" } %>
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group position-relative has-icon-left mb-4">
                     <% if @minimum_password_length %>

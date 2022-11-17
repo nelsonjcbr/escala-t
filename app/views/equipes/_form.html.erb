@@ -1,0 +1,53 @@
+<%= form_with(model: equipe) do |form| %>
+  <% if equipe.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(equipe.errors.count, "error") %> prohibited this equipe from being saved:</h2>
+
+      <ul>
+        <% equipe.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class='row'>
+  <div class='col-md-6 col-12'>
+    <%= form.label :nome, style: "display: block" %>
+    <%= form.text_field :nome, class: 'form-control', required: true %>
+  </div>
+
+  <div class='col-md-6 col-12'>
+    <%= form.label :tipo_escala, style: "display: block" %>
+    <%= form.select :tipo_escala, options_for_select(@tipos_escala), {prompt: 'Selecione'} , { class: "form-control form-select", required: true } %>
+  </div>
+  <div class="col-md-3 col-12">
+    <%= form.label :unidade, style: "display: block" %>
+    <%= form.select :unidade_id, @unidades, { prompt: 'Unidade'}, { class: "form-control form-select" ,  placeholder: "Selecione a unidade", title: "Unidade" } %>
+  </div>
+
+  <div class='row'>
+    <div class='col-12'><b>Horários</b></div>
+  </div>
+  <div class='row'>
+    <div class='col-1'>Ordem</div>
+    <div class='col-3'>Inicio</div>
+    <div class='col-3'>Fim</div>
+  </div>
+
+  <!-- 
+  <% equipe.turnos.each do |turno| %>
+    <%= form.fields_for turno, index: turno.id do |turno_formm| %>
+      <%= render 'turno_fields', turno_form: turno_formm %>
+    <% end%>
+  <% end %>
+  -->
+  <%= form.fields_for :turnos do |turno_form| %>
+    <%= render 'turno_fields', turno_form: turno_form %>
+  <% end%>
+  
+  <div class="col-12 d-flex justify-content-end">
+    <%= form.submit "Gravar", class: "btn btn-primary me-1 mb-1" %>
+    <%= link_to "Cancelar", equipes_path, class: "btn btn-light-secondary me-1 mb-1" %>
+  </div>
+<% end %>

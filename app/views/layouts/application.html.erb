@@ -82,6 +82,9 @@
                 <li class="submenu-item ">
                   <%= link_to 'Conselho Classes', conselhoclasses_path %>
                 </li>
+                <li class="submenu-item ">
+                  <%= link_to 'Equipes', equipes_path %>
+                </li>
               </ul>
             </li>
 
@@ -98,7 +101,7 @@
               <li class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link avatar'>
                   <img src="/assets/images/faces/1.jpg" alt="" srcset="">
-                  <span> <%= current_user.name unless current_user.nil? %> </span>
+                  <span> <%= current_user.nome_chamado unless current_user.nil? %> </span>
                 </a>
 
                 <ul class="submenu ">

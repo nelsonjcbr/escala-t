@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_05_163106) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_11_211008) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,6 +48,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_05_163106) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "equipes", force: :cascade do |t|
+    t.string "nome"
+    t.string "tipo_escala"
+    t.bigint "unidade_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["unidade_id"], name: "index_equipes_on_unidade_id"
+  end
+
   create_table "estabelecimentos", force: :cascade do |t|
     t.string "nome"
     t.string "cnpj"
@@ -66,6 +75,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_05_163106) do
     t.datetime "updated_at", null: false
     t.index ["cidade_id"], name: "index_estabelecimentos_on_cidade_id"
     t.index ["uf_id"], name: "index_estabelecimentos_on_uf_id"
+  end
+
+  create_table "turnos", force: :cascade do |t|
+    t.bigint "equipe_id", null: false
+    t.integer "ordem", null: false
+    t.time "hora_inicio", null: false
+    t.time "hora_fim", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["equipe_id"], name: "index_turnos_on_equipe_id"
   end
 
   create_table "ufs", force: :cascade do |t|
@@ -90,12 +109,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_05_163106) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
+    t.string "cpf"
+    t.string "nome_chamado"
+    t.string "sexo"
+    t.string "profissao"
+    t.bigint "conselhoclass_id"
+    t.string "numero_conselho"
+    t.bigint "uf_conselho_id"
+    t.index ["conselhoclass_id"], name: "index_users_on_conselhoclass_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["uf_conselho_id"], name: "index_users_on_uf_orgao_classe_id"
   end
 
   add_foreign_key "cidades", "ufs"
+  add_foreign_key "equipes", "unidades"
   add_foreign_key "estabelecimentos", "cidades"
   add_foreign_key "estabelecimentos", "ufs"
+  add_foreign_key "turnos", "equipes"
   add_foreign_key "unidades", "estabelecimentos"
+  add_foreign_key "users", "conselhoclasses"
+  add_foreign_key "users", "ufs", column: "uf_conselho_id"
 end

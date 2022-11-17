@@ -52,9 +52,43 @@
                   </div>
                   <div class="col-md-6 col-12">
                     <div class="form-group">
+                      <%= form.text_field :nome_chamado, class: "form-control", placeholder: "Nome como é chamdo", title: "Nome como é chamado, ex: João, Silva", required: true %>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
                       <%= form.text_field :email, class: "form-control", placeholder: "email", title: "Email do usuário", required: true %>
                     </div>
                   </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <%= form.select :sexo, @sexos, { prompt: 'Sexo'}, { class: "form-control form-select" } %>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <%= form.text_field :profissao, class: "form-control", placeholder: "Profissão", title: "Sua profissão" %>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <h5>Registro no conselho</h5>
+                    <div class="col-md-3 col-12">
+                      <div class="form-group">
+                        <%= form.select :conselhoclass_id, @conselhoclasses , { prompt: 'Conselho'}, { class: "form-control form-select" ,  placeholder: "Selecione o conselho de classe", title: "Conselho de classe" } %>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="form-group">
+                        <%= form.text_field :numero_conselho, class: "form-control", placeholder: "Número", title: "Número no conselho de classe" %>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="form-group">
+                         <%= form.select :uf_conselho_id, @ufs, { prompt: 'Selecione a UF'}, { class: "form-control form-select" } %>
+                      </div>
+                    </div>
+                  </div>  
                   <p>
 
                   <div class="col-12 d-flex justify-content-end">

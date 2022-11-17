@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :equipes
   resources :conselhoclasses
   resources :cidades
   resources :estabelecimentos do

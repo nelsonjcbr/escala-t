@@ -1,0 +1,11 @@
+<%= turbo_frame_tag equipe do %>
+  <div class="equipe-card">
+    <div class="row match-height">
+      <p>
+      <div class="col-md-4 col-12"><b><%= link_to equipe.nome, equipe_path(equipe) %></b></div>
+      <div class="col-md-4 col-12"><%= equipe.unidade.nome %>
+      <div class=>
+       </p>
+    </div>
+  </div>
+<% end %>
