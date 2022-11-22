@@ -1,26 +1,49 @@
 <h1>Show</h1>
 
 <%= turbo_frame_tag @equipe do %>
-  <div class="equipe-card">
-    <div class="row match-height">
-      <p>
-      <div class="col-6"><b><%= @equipe.nome %></b></div>
-      <div class="col-3"> <%= @equipe.tipo_escala %></div>
-      <div class="col-3"> <%= @equipe.unidade.nome %></div>
-      <% @equipe.turnos.each do |turno| %>
-        <div class="row">
-          <div class="col-1"><%= turno.ordem %></div>
-          <div class="col-2"><%= turno.hora_inicio.strftime("%H:%M") %></div>
-          <div class="col-2"><%= turno.hora_fim.strftime("%H:%M")  %></div>
+    
+  <div class="row match-height">
+    <div class="col-md-6 col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">
+            <strong><%= @equipe.nome %></strong>
+          </div>
+          <div class="col-md-6 col-12"> Escala: <%= @equipe.tipo_escala %></div>
+          <div class="col-md-6 col-12"> <%= @equipe.unidade.nome %></div>
+          <% @equipe.turnos.each do |turno| %>
+            <div class="row">
+              <div class="col-1"><%= turno.ordem %></div>
+              <div class="col-2"><%= turno.hora_inicio.strftime("%H:%M") %></div>
+              <div class="col-2"><%= turno.hora_fim.strftime("%H:%M")  %></div>
+            </div>
+          <% end %>
         </div>
-      <% end %>
-      <div class="col-12 d-flex justify-content-end">
-        <%= link_to "Editar", edit_equipe_path(@equipe), class: "btn btn-primary me-1 mb-1" %>
-        <%= button_to "Excluir", @equipe, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger me-1 mb-1" %>
-        <%= link_to "Cancelar", equipes_path, class: "btn btn-light-secondary me-1 mb-1" %>
+        <div class="col-12 d-flex justify-content-end">
+          <%= link_to "Editar", edit_equipe_path(@equipe), class: "btn btn-primary me-1 mb-1" %>
+          <%= button_to "Excluir", @equipe, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger me-1 mb-1" %>
+         <%= link_to "Cancelar", equipes_path, class: "btn btn-light-secondary me-1 mb-1" %>
+        </div>
       </div>
- 
-      </p>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="card">
+        <div class="card-body">
+          <% if @equipe.membros.size > 0 %>
+            <div class="card-title">
+              <strong>Membros da equipe</strong>
+            </div>
+          <% end %>
+          <% @equipe.membros.each do |membro| %>
+            <div class="row">
+              <div class="col-12"><%= membro.user.name %></div>
+            </div>
+          <% end %>
+          <div class="col-12 d-flex justify-content-end">
+            <%= link_to "Editar Membros", equipe_membros_path(@equipe), class: "btn btn-primary me-1 mb-1" %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>

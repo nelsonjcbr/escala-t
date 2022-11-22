@@ -18,7 +18,7 @@
     </div>
     <div class="row">
       <div class="col-md-6 col-12">
-        <%= link_to " Novo", new_conselhoclass_path, data: { turbo_frame: "new_conselhoclass" }, class: "fa fa-plus-circle text-success p-2 fw-bold" %>
+        <%= link_to "Novo", new_conselhoclass_path, data: { turbo_frame: "new_conselhoclass" }, class: "btn btn-success me-1 mb-1"  %>
       </div>
       <div class="col-md-6 col-12">
         <div class="form-group position-relative has-icon-right">
@@ -35,10 +35,10 @@
 
   <div id="conselhoclasses">
     <section class="section">
-      <div class="row" id="table-striped-dark">
+      <div class="row">
         <div class="col-12">
           <div class="card">
-            <div class="card-content">
+            <div class="card-body">
               <!-- table strip dark -->
               <%= render @conselhoclasses %>
             </div>

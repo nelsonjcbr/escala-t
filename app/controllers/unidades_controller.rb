@@ -1,6 +1,6 @@
 class UnidadesController < ApplicationController
   before_action :set_unidade, only: %i[ show edit update destroy ]
-  before_action :set_estabelecimento, only: %i[index edit new]
+  before_action :set_estabelecimento, only: %i[index edit new show]
 
   # GET /unidades or /unidades.json
   def index
@@ -23,10 +23,11 @@ class UnidadesController < ApplicationController
   # POST /unidades or /unidades.json
   def create
     @unidade = Unidade.new(unidade_params)
+    @unidade.estabelecimento_id = params[:estabelecimento_id]
 
     respond_to do |format|
       if @unidade.save
-        format.html { redirect_to new_estabelecimento_unidade_path, notice: "Unidade was successfully created." }
+        format.html { redirect_to estabelecimento_unidades_path(@unidade.estabelecimento_id), notice: "Unidade was successfully created." }
         format.json { render :show, status: :created, location: @unidade }
       else
         format.html { render :new, status: :unprocessable_entity }

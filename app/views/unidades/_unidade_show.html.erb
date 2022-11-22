@@ -1,0 +1,26 @@
+<div class="col-md-6 col-12">
+
+  <%= turbo_frame_tag unidade do %>
+
+    <div class="card">
+      <div class="card-body"> 
+        <div class="row">
+          <strong><%= unidade.nome %></strong>
+        </div>
+        <div class="row">
+          <label><%= "#{unidade.equipes.size} Equipes" %></label>
+        </div>
+        <% unidade.equipes.each do |e| %>
+          <div class="row">
+            <%= link_to "#{e.nome} #{e.membros.size} Membros ", equipe_path(e)  %>
+          </div>
+        <% end %>
+        <div class="col-12 d-flex justify-content-end">
+          <%= link_to "Editar", edit_estabelecimento_unidade_path(estabelecimento, unidade), class: "btn btn-primary me-1 mb-1" %>
+          <%= button_to "Excluir", estabelecimento_unidade_url(estabelecimento, unidade), form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger me-1 mb-1" %>
+          <%= link_to "Cancelar", estabelecimento_unidades_path(estabelecimento), class: "btn btn-secundary me-1 mb-1" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

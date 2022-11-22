@@ -1,1 +1,3 @@
-<%= render "form", estabelecimento: @estabelecimento, unidade: @unidade, acao: "Edita", subtitle:  "Altera o cadastro de uma nova Unidade de Saúde." %>
+<%= turbo_frame_tag @unidade do %>
+  <%= render "form", estabelecimento: @estabelecimento, unidade: @unidade %>
+<% end %>

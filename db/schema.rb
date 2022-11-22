@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_11_211008) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_18_001657) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -77,6 +77,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_11_211008) do
     t.index ["uf_id"], name: "index_estabelecimentos_on_uf_id"
   end
 
+  create_table "membros", force: :cascade do |t|
+    t.bigint "equipe_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["equipe_id"], name: "index_membros_on_equipe_id"
+    t.index ["user_id"], name: "index_membros_on_user_id"
+  end
+
   create_table "turnos", force: :cascade do |t|
     t.bigint "equipe_id", null: false
     t.integer "ordem", null: false
@@ -126,6 +135,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_11_211008) do
   add_foreign_key "equipes", "unidades"
   add_foreign_key "estabelecimentos", "cidades"
   add_foreign_key "estabelecimentos", "ufs"
+  add_foreign_key "membros", "equipes"
+  add_foreign_key "membros", "users"
   add_foreign_key "turnos", "equipes"
   add_foreign_key "unidades", "estabelecimentos"
   add_foreign_key "users", "conselhoclasses"

@@ -1,10 +1,4 @@
-<p style="color: green"><%= notice %></p>
 
-<%= render @unidade %>
+<h1>Show</h1>
 
-<div>
-  <%= link_to "Edit this unidade", edit_unidade_path(@unidade) %> |
-  <%= link_to "Back to unidades", unidades_path %>
-
-  <%= button_to "Destroy this unidade", @unidade, method: :delete %>
-</div>
+<%= render "unidade_show", estabelecimento: @estabelecimento, unidade: @unidade %>
