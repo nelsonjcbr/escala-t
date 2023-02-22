@@ -10,3 +10,7 @@ ngrok config add-authtoken 2Czn2BB88h1ESFsN7hZwLroEt18_98wvFoncRrLKBE51DoUY
 ngrok http 3000
 (vai mostrar a url que tem que rodar)
 
+
+Kamatera
+root: Kncfaaa12345a@
+nelson: ncfaaa34

@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  resources :escalacmpts do
+    resources :escaladays
+  end
   resources :equipes do
     resources :membros 
   end

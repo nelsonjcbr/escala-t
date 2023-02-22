@@ -1,0 +1,90 @@
+<p style="color: green"><%= notice %></p>
+
+<div class="page-heading">
+  <div class="page-title">
+    <div class="row">
+      <div class="col-12 col-md-6 order-md-1 order-last">
+        <h3>Escalas</h3>
+        <p class="text-subtitle text-muted">Escala do mês <%= @escalacmpt.cmpt_formatada %>.</p>
+      </div>
+      <div class="col-12 col-md-6 order-md-2 order-first">
+        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Checkout Page</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <%= form_with model: @escalacmpt do |form| %>
+    <% if @escalacmpt.errors.any? %>
+      <div style="color: red">
+       <h2><%= pluralize(@escalacmpt.errors.count, "error") %> prohibited this escalacmpt from being saved:</h2>
+
+        <ul>
+          <% @escalacmpt.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+         <% end %>
+       </ul>
+      </div>
+    <% end %>
+
+    <%= form.select :membro_id, @membros, { prompt: "Selecione um membro..."}, { class: "form-control", placeholder: "Membro", title: "Membro" } %>
+   
+    <div id="escala">
+      <section class="section">
+        <table class="table table-bordered" width="50%">
+          <thead>
+            <tr>
+              <th width=14%><div class="badge bg-warning">Segunda</div></th>
+              <th width=14%><div class="badge bg-dark">Terça</div></th>
+              <th width=14%><div class="badge bg-info">Quarta</div></th>
+              <th width=14%><div class="badge bg-primary">Quinta</div></th>
+              <th width=14%><div class="badge bg-success">Sexta</div></th>
+              <th width=14%><div class="badge bg-danger">Sábado</div></th>
+              <th width=14%><div class="badge bg-danger">Domingo</div></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% coluna = 0 %>
+            <tr>
+            <% @escalacmpt.escaladays.each_with_index do |d, i| %>
+              <% if i == 0 && d.data.wday != 0 %>
+                <% d.data.wday.times do %>
+                  <td></td>
+                <% end %>
+              <% end %>
+              <% if d.data.wday == 0 && i != 0 %>
+                </tr><tr>
+              <% end %>
+              <td class="align-top"><div class="badge bg-dark">
+                <b><%= d.data.day.to_s %></b>
+                </div>
+                <% d.escalas.each do |t| %>
+                  <div class="form-check custom-control custom-checkbox">
+                    <%= check_box_tag "escalacmpt[escalas_attributes[#{t.id}][marcado]]", t.id, false, options = { class: "form-check-input form-check-success" } %>
+                    <%= label_tag "escalacmpt[escalas_attributes[#{t.id}][marcado]]", "Inicio: #{t.turno.hora_inicio.hour}h" %>
+                  </div>
+                  <% t.escalamembros.each do |m| %>
+                    <div class="custom-control custom-checkbox">
+                      <%= check_box_tag "escalacmpt[escalamembros_attributes[#{m.id}][excluir]]", m.id, false, options = { class: "btn-check" } %>
+                      <%= label_tag "escalacmpt[escalamembros_attributes[#{m.id}][excluir]]",  "X "+ m.membro.nome_chamado, class: "btn btn-outline-danger btn-sm" %></small>
+                    </div>
+                  <% end %>
+                <% end %>
+              </td>
+              <% coluna += 1 %>
+            <% end %>
+            </tr>
+         </tbody>
+        </table>
+      </section>
+    </div>
+    <div class="col-12 d-flex justify-content-end">
+      <%= form.submit "Gravar", class: "btn btn-primary me-1 mb-1" %>
+      <%= link_to "Cancelar", escalacmpts_path, class: "btn btn-light-secondary me-1 mb-1" %>
+    </div>
+  <% end %>
+</div>

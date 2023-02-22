@@ -4,4 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   validates :nome_chamado, :cpf, presence: true
+
+  include ImageUploader::Attachment(:foto)
+
 end

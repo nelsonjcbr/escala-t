@@ -46,13 +46,20 @@
                 <div class="row">
                   <div class="form-group col-12">
                     <h5>Usuários</h5>
-                    <div class="form-group">
-                      <%= form.text_field :name, class: "form-control", placeholder: "Nome do usuário", title: "Nome do usuário", required: true %>
+                    <div class="col-md-6 col-12">
+                      <div class="form-group">
+                        <%= form.text_field :name, class: "form-control", placeholder: "Nome do usuário", title: "Nome do usuário", required: true %>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-6 col-12">
                     <div class="form-group">
                       <%= form.text_field :nome_chamado, class: "form-control", placeholder: "Nome como é chamdo", title: "Nome como é chamado, ex: João, Silva", required: true %>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <%= form.text_field :cpf, class: "form-control", placeholder: "CPF", title: "CPF", required: true %>
                     </div>
                   </div>
                   <div class="col-md-6 col-12">
@@ -86,6 +93,14 @@
                     <div class="col-md-3 col-12">
                       <div class="form-group">
                          <%= form.select :uf_conselho_id, @ufs, { prompt: 'Selecione a UF'}, { class: "form-control form-select" } %>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group">
+                        <%= form.label :foto %>
+                        <%= image_tag form.object.image_url if form.object.cached_foto_data %>
+                        <%= form.hidden_field :foto, value: form.object.cached_foto_data %>
+                        <%= form.file_field :foto %>
                       </div>
                     </div>
                   </div>  

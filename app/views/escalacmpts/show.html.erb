@@ -1,0 +1,75 @@
+<p style="color: green"><%= notice %></p>
+
+<div class="page-heading">
+  <div class="page-title">
+    <div class="row">
+      <div class="col-12 col-md-6 order-md-1 order-last">
+        <h3>Escalas</h3>
+        <p class="text-subtitle text-muted">Escala do mês <%= @escalacmpt.cmpt_formatada %>.</p>
+      </div>
+      <div class="col-12 col-md-6 order-md-2 order-first">
+        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Checkout Page</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div id="escala">
+    <section class="section">
+      <table class="table table-bordered" width="50%">
+        <thead>
+          <tr>
+            <th width=14%><div class="badge bg-warning">Segunda</div></th>
+            <th width=14%><div class="badge bg-dark">Terça</div></th>
+            <th width=14%><div class="badge bg-info">Quarta</div></th>
+            <th width=14%><div class="badge bg-primary">Quinta</div></th>
+            <th width=14%><div class="badge bg-success">Sexta</div></th>
+            <th width=14%><div class="badge bg-danger">Sábado</div></th>
+            <th width=14%><div class="badge bg-danger">Domingo</div></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% coluna = 0 %>
+          <tr>
+          <% @escalacmpt.escaladays.each_with_index do |d, i| %>
+            <% if i == 0 && d.data.wday != 0 %>
+              <% d.data.wday.times do %>
+                <td></td>
+              <% end %>
+            <% end %>
+            <% if d.data.wday == 0 && i != 0 %>
+              </tr><tr>
+            <% end %>
+            <td class="align-top">
+              <div class="badge bg-dark">
+                <b><%= d.data.day.to_s %></b>
+              </div>
+              <% d.escalas.each do |t| %>
+                <span class="fw-bold"><%= "Inicio: #{t.turno.hora_inicio.hour}h" %></span>
+                <% t.escalamembros.each do |m| %>
+                  <span class="fst-italic"><%= m.membro.nome_chamado %><br/></span> 
+                <% end %>
+              <% end %>
+            </td>
+            <% coluna += 1 %>
+          <% end %>
+          </tr>
+       </tbody>
+      </table>
+      <div class="card">
+        <div class="row match-height">
+          <div class="col-1">
+            <%= link_to "Editar", edit_escalacmpt_path(@escalacmpt), class: "btn btn-primary me-1 mb-1" %>
+          </div>
+          <div class="col-1">
+            <%= button_to "Excluir", @escalacmpt, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger me-1 mb-1" %>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

@@ -46,9 +46,9 @@
             <li class="sidebar-title">Menu</li>
 
             <li class="sidebar-item active">
-              <a href="/agendas" class='sidebar-link'>
+              <a href="/escalacmpts" class='sidebar-link'>
                 <i class="fa-5 fa fa-calendar"></i>
-                <span>Agendas</span>
+                <span>Escalas</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -97,19 +97,19 @@
             <% else %>
               <li class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link avatar'>
-                  <img src="/assets/images/faces/1.jpg" alt="" srcset="">
+                  <%= image_tag current_user.foto_url if current_user.foto_data %>
                   <span> <%= current_user.nome_chamado unless current_user.nil? %> </span>
                 </a>
 
                 <ul class="submenu ">
                   <li class="submenu-item ">
-                    <a href="/users/edit">Alterar</a>
-                  </li>
-                  <li class="submenu-item ">
-                    <%= link_to "Registrar", new_user_registration_path %>
-                  </li>
-                  <li class="submenu-item ">
                     <%= link_to "Desconectar", destroy_user_session_path, "data-turbo-method": :delete, :class => 'dropdown-item' %>
+                  </li>
+                  <li class="submenu-item ">
+                    <%= link_to 'Meu Cadastro', user_path(current_user) %>
+                  </li>
+                  <li class="submenu-item ">
+                    <%= link_to "Usuários", users_path %>
                   </li>
                 </ul>
               </li>

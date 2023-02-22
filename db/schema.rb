@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_18_001657) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_22_175041) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,6 +55,34 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_001657) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unidade_id"], name: "index_equipes_on_unidade_id"
+  end
+
+  create_table "escalacmpts", force: :cascade do |t|
+    t.bigint "equipe_id", null: false
+    t.integer "cmpt"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["equipe_id"], name: "index_escalacmpts_on_equipe_id"
+  end
+
+  create_table "escaladays", force: :cascade do |t|
+    t.bigint "escalacmpt_id", null: false
+    t.date "data", null: false
+    t.index ["escalacmpt_id"], name: "index_escaladays_on_escalacmpt_id"
+  end
+
+  create_table "escalamembros", force: :cascade do |t|
+    t.bigint "escala_id", null: false
+    t.bigint "membro_id", null: false
+    t.index ["escala_id"], name: "index_escalamembros_on_escala_id"
+    t.index ["membro_id"], name: "index_escalamembros_on_membro_id"
+  end
+
+  create_table "escalas", force: :cascade do |t|
+    t.bigint "escaladay_id", null: false
+    t.bigint "turno_id", null: false
+    t.index ["escaladay_id"], name: "index_escalas_on_escaladay_id"
+    t.index ["turno_id"], name: "index_escalas_on_turno_id"
   end
 
   create_table "estabelecimentos", force: :cascade do |t|
@@ -125,6 +153,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_001657) do
     t.bigint "conselhoclass_id"
     t.string "numero_conselho"
     t.bigint "uf_conselho_id"
+    t.jsonb "foto_data"
     t.index ["conselhoclass_id"], name: "index_users_on_conselhoclass_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -133,6 +162,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_001657) do
 
   add_foreign_key "cidades", "ufs"
   add_foreign_key "equipes", "unidades"
+  add_foreign_key "escalacmpts", "equipes"
+  add_foreign_key "escaladays", "escalacmpts"
+  add_foreign_key "escalamembros", "escalas"
+  add_foreign_key "escalamembros", "membros"
+  add_foreign_key "escalas", "escaladays"
+  add_foreign_key "escalas", "turnos"
   add_foreign_key "estabelecimentos", "cidades"
   add_foreign_key "estabelecimentos", "ufs"
   add_foreign_key "membros", "equipes"

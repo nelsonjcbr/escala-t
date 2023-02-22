@@ -6,7 +6,8 @@
 
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">        
+          <h4 class="card-title">  
+            <%= image_tag user.foto_url if user.foto_data %>
             <%= user.name %>
           </h4>
         </div>
@@ -35,6 +36,7 @@
 
 <div class="col-12 d-flex justify-content-end">
   <%= link_to "Editar", edit_user_path(user), class: "btn btn-primary me-1 mb-1" %>
+  <%= link_to "Alterar Senha", '/users/edit', class: "btn btn-primary me-1 mb-1" %>
   <%= button_to "Excluir", user, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger me-1 mb-1" %>
 </div>
 

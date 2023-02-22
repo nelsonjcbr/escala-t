@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @escala %>
+
+<div>
+  <%= link_to "Edit this escala", edit_escala_path(@escala) %> |
+  <%= link_to "Back to escalas", escalas_path %>
+
+  <%= button_to "Destroy this escala", @escala, method: :delete %>
+</div>
