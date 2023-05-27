@@ -62,6 +62,7 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "byebug"
+  gem "rspec-rails", "~> 6.0"
 end
 
 group :development do
@@ -73,6 +74,7 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+  gem "bullet"          # Verifica se os selects podem ser melhorados
 end
 
 group :test do
@@ -90,3 +92,6 @@ gem 'devise', '~> 4.8', '>= 4.8.1'
 gem 'sass-rails'
 
 gem "city-state", "~> 0.1.0"
+
+gem "cancancan", "~> 3.3.0"
+gem "rubocop-rails", "~> 2.19" # Verifica se código foi escrito da melhor forma

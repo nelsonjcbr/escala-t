@@ -1,4 +1,6 @@
 class EscaladaysController < ApplicationController
+  load_and_authorize_resource
+
   before_action :set_escala, only: %i[ show edit update destroy ]
   before_action :set_escalacmpt, only: %i[ index ]
 

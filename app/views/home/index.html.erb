@@ -1,10 +1,8 @@
 <h1>Home#index</h1>
 
-<p>Find me in app/views/home/index.html.erb</p>
-
 <% if current_user %>
   <p>Olá <%= current_user.email %></p>
-  <p>Seja bem vindo ao Psico2022, aqui você pode controlar os atendimentos do seu consultório</p>
+  <p>Seja bem vindo ao Escalat, aqui você tem o controle da escala de trabalho da Instituição</p>
   <p>Você pode 
   <%= link_to "desconectar aqui", destroy_user_session_path, "data-turbo-method": :delete %>
   <p>Você pode cadastrar um novo usuário 

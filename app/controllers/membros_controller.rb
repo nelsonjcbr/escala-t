@@ -1,4 +1,6 @@
 class MembrosController < ApplicationController
+  load_and_authorize_resource
+
   before_action :set_membro, only: %i[ show edit update destroy ]
   before_action :set_equipe, only: %i[index edit new]
 

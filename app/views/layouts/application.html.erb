@@ -51,41 +51,38 @@
                 <span>Escalas</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a href="/pacientes" class='sidebar-link'>
-                <i class="fs-5 fa fa-user"></i>
-                <span>Pacientes</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a href="/atendimentos" class='sidebar-link'>
-                <i class="bi bi-file-earmark-medical-fill"></i>
-                <span>Atendimentos</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item  has-sub">
-              <a href="#" class='sidebar-link'>
-                <i class="bi bi-stack"></i>
-                <span>Configurações</span>
-              </a>
-              <ul class="submenu ">
-                <li class="submenu-item ">
-                  <%= link_to 'Estabelecimentos', estabelecimentos_path %>
-                </li>
-                <li class="submenu-item ">
-                  <a href="/users">Usuários</a>
-                </li>
-                <li class="submenu-item ">
-                  <%= link_to 'Conselho Classes', conselhoclasses_path %>
-                </li>
-                <li class="submenu-item ">
-                  <%= link_to 'Equipes', equipes_path %>
-                </li>
-              </ul>
-            </li>
-
-            <hr>
+          
+            <% if current_user.admin? || current_user.organizer? %>
+              <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                  <i class="bi bi-stack"></i>
+                  <span>Configurações</span>
+                </a>
+                <ul class="submenu ">
+                  <% if can? :manage, Estabelecimento %>
+                    <li class="submenu-item ">
+                      <%= link_to 'Estabelecimentos', estabelecimentos_path %>
+                    </li>
+                  <% end %>
+                  <% if can? :manage, current_user %>
+                    <li class="submenu-item ">
+                      <a href="/users">Usuários</a>
+                    </li>
+                  <% end %>
+                  <% if can? :manage, Conselhoclass %>
+                    <li class="submenu-item ">
+                      <%= link_to 'Conselho Classes', conselhoclasses_path %>
+                    </li>
+                  <% end %>
+                  <% if can? :manage, Equipe %>
+                    <li class="submenu-item ">
+                      <%= link_to 'Equipes', equipes_path %>
+                    </li>
+                  <% end %>
+                </ul>
+              </li>
+              <hr>
+            <% end %>
 
             <% if current_user.nil? %>
               <li class="sidebar-item">
@@ -103,25 +100,30 @@
 
                 <ul class="submenu ">
                   <li class="submenu-item ">
+                    <i class="fs-5 fa fa-user"></i>
                     <%= link_to "Desconectar", destroy_user_session_path, "data-turbo-method": :delete, :class => 'dropdown-item' %>
                   </li>
                   <li class="submenu-item ">
                     <%= link_to 'Meu Cadastro', user_path(current_user) %>
                   </li>
-                  <li class="submenu-item ">
-                    <%= link_to "Usuários", users_path %>
-                  </li>
+                  <% if can? :manage, current_user %>
+                    <li class="submenu-item ">
+                      <%= link_to "Usuários", users_path %>
+                    </li>
+                  <% end %>
                 </ul>
               </li>
             <% end %>
 
-            <hr>       
-            <li class="sidebar-item active ">
-              <a href="https://technext.github.io/mazer/index.html" class='sidebar-link'>
-                <i class="bi bi-grid-fill"></i>
-                <span>Exemplos Mazer</span>
-              </a>
-            </li>
+            <% if current_user.admin? %>
+              <hr>       
+              <li class="sidebar-item active ">
+                <a href="https://technext.github.io/mazer/index.html" class='sidebar-link'>
+                  <i class="bi bi-grid-fill"></i>
+                  <span>Exemplos Mazer</span>
+                </a>
+              </li>
+            <% end %>
           </ul>
         </div>
         <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>

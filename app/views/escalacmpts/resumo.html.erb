@@ -1,0 +1,18 @@
+<%= turbo_frame_tag "resumo_frame" do %>
+  <div class="card">
+    <div class="card-content">
+      <div class="card-body">
+        <h4>Plantões por profissional</h4>
+        <div class="row">
+          <% @resumo.each do |r| %>
+            <div class="col-3"><%= r.nome_chamado %></div>
+            <div class="col-9">
+              <span class="badge bg-secondary"><%= r.turnos %></span>
+              Plantões
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

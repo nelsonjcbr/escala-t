@@ -18,6 +18,29 @@
     </div>
   </div>
 
+
+  <%= form_with url: escalacmpt_path(@escalacmpt), 
+                method: :get, 
+                data: { turbo_frame: 'escalacmpt_body' } do |f| %>
+    <div class="row">    
+      <div class="col-md-4 col-12">
+        <div class="input-group mb-3">
+          <span class="input-group-text fa fa-search"></span>
+          <%= f.select :membro_id, options_for_select(@membros, params[:membro_id]), { prompt: "Selecione um membro..."}, { class: "form-control", placeholder: "Membro", title: "Membro" } %>
+        </div>
+      </div>
+      <div class="col-md-2 col-12">
+        <%= f.submit "Pesquisar" %>
+      </div>
+
+      <div class="col-md-6 col-12">
+        <%= turbo_frame_tag "resumo_frame", target: "_top" do %>
+          <%= link_to "Resumo", escalacmpt_resumo_path(@escalacmpt), data: { turbo_frame: "resumo_frame" }, class: "btn btn--primary" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
   <div id="escala">
     <section class="section">
       <table class="table table-bordered" width="50%">
@@ -51,8 +74,15 @@
               <% d.escalas.each do |t| %>
                 <span class="fw-bold"><%= "Inicio: #{t.turno.hora_inicio.hour}h" %></span>
                 <% t.escalamembros.each do |m| %>
-                  <span class="fst-italic"><%= m.membro.nome_chamado %><br/></span> 
+                  <% unless params[:membro_id].present? && params[:membro_id].to_i != m.membro_id %>
+                    <span class="fst-italic">
+                      <br/>
+                      <%= image_tag m.membro.foto_url, size: "20x20" if m.membro.foto_data %>
+                      <%= m.membro.nome_chamado %>
+                    </span> 
+                  <% end %>
                 <% end %>
+                <br/>
               <% end %>
             </td>
             <% coluna += 1 %>
@@ -60,16 +90,18 @@
           </tr>
        </tbody>
       </table>
-      <div class="card">
-        <div class="row match-height">
-          <div class="col-1">
-            <%= link_to "Editar", edit_escalacmpt_path(@escalacmpt), class: "btn btn-primary me-1 mb-1" %>
-          </div>
-          <div class="col-1">
-            <%= button_to "Excluir", @escalacmpt, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger me-1 mb-1" %>
+      <% if can? :manage, @escalacmpt %>
+        <div class="card">
+          <div class="row match-height">
+            <div class="col-1">
+              <%= link_to "Editar", edit_escalacmpt_path(@escalacmpt), class: "btn btn-primary me-1 mb-1" %>
+            </div>
+            <div class="col-1">
+              <%= button_to "Excluir", @escalacmpt, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger me-1 mb-1" %>
+            </div>
           </div>
         </div>
-      </div>
+      <% end %>
     </section>
   </div>
 </div>

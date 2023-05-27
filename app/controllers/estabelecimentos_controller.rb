@@ -1,11 +1,13 @@
 class EstabelecimentosController < ApplicationController
+  load_and_authorize_resource
+
   before_action :authenticate_user!
   before_action :set_estabelecimento, only: %i[ show edit update destroy ]
   before_action :carrega_cidades, only: %i[ new edit update create ]
 
   # GET /estabelecimentos or /estabelecimentos.json
   def index
-    @estabelecimentos = Estabelecimento.all
+    @estabelecimentos = Estabelecimento.all.includes([:cidade, :uf])
   end
 
   # GET /estabelecimentos/1 or /estabelecimentos/1.json

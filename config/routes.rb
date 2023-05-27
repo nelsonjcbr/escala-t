@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :escalacmpts do
     resources :escaladays
+    get 'resumo'
   end
   resources :equipes do
     resources :membros 

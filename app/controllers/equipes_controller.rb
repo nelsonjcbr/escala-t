@@ -1,4 +1,6 @@
 class EquipesController < ApplicationController
+  load_and_authorize_resource
+
   before_action :set_equipe, only: %i[ show edit update destroy ]
   before_action :set_tiposescala, only: %i[ edit new update create]
   before_action :set_selects, only: %i[ edit new update create]

@@ -1,7 +1,9 @@
 class EscalacmptsController < ApplicationController
+  load_and_authorize_resource
+
   before_action :set_escalacmpt, only: %i[ show edit update destroy ]
   before_action :set_selects, only: %i[ edit new update create]
-  before_action :set_membros, only: %i[ edit update]
+  before_action :set_membros, only: %i[ show edit update]
 
   # GET /escalacmpts or /escalacmpts.json
   def index
@@ -10,6 +12,7 @@ class EscalacmptsController < ApplicationController
 
   # GET /escalacmpts/1 or /escalacmpts/1.json
   def show
+  
   end
 
   # GET /escalacmpts/new
@@ -59,6 +62,19 @@ class EscalacmptsController < ApplicationController
       format.html { redirect_to escalacmpts_url, notice: "Escalacmpt was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def resumo
+    @escalacmpt = Escalacmpt.find(params[:escalacmpt_id])
+    # Escalacmpt ->* escaladays ->* escalas(turnos) ->* escalamembros
+    @resumo = Escalamembro.find_by_sql("
+      select u.nome_chamado, em.membro_id, count(*) as turnos from escalacmpts ec
+        inner join escaladays    d  on d.escalacmpt_id=ec.id
+        inner join escalas       e  on e.escaladay_id=d.id
+        inner join escalamembros em on em.escala_id=e.id
+        inner join users         u  on u.id=em.membro_id
+        group by 1,2
+      ")
   end
 
   private

@@ -46,6 +46,12 @@
                 <div class="row">
                   <div class="form-group col-12">
                     <h5>Usuários</h5>
+
+                    <div class="col-md-6 col-12">
+                      <div class="form-group">
+                        <%= form.select :role, User.roles.map { |key, value| [key.humanize, key] }, { prompt: 'Papel' }, class: "form-control form-select", placeholder: "Papel", title: "Papel do usuário nesse aplicativo" %>
+                      </div>
+                    </div>
                     <div class="col-md-6 col-12">
                       <div class="form-group">
                         <%= form.text_field :name, class: "form-control", placeholder: "Nome do usuário", title: "Nome do usuário", required: true %>
@@ -99,6 +105,7 @@
                       <div class="form-group">
                         <%= form.label :foto %>
                         <%= image_tag form.object.image_url if form.object.cached_foto_data %>
+                        <%= image_tag user.foto_url if user.foto_data %>
                         <%= form.hidden_field :foto, value: form.object.cached_foto_data %>
                         <%= form.file_field :foto %>
                       </div>

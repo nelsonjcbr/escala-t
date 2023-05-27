@@ -7,4 +7,6 @@ class User < ApplicationRecord
 
   include ImageUploader::Attachment(:foto)
 
+  enum role: { admin: 0, organizer: 1, user: 2 }
+ 
 end

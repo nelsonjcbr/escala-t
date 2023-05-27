@@ -1,3 +1,4 @@
+# Migração para criar a tabela UFS e já povoá-la com os estados brasileiros
 class CreateUfs < ActiveRecord::Migration[7.0]
   def up
     create_table :ufs do |t|
@@ -34,7 +35,8 @@ class CreateUfs < ActiveRecord::Migration[7.0]
     Uf.create(id: 17,	sigla: 'TO', nome: 'Tocantins')
     Uf.create(id: 99,	sigla: 'XX', nome: 'Outro Pais')
   end
-  def def down 
+
+  def down
     drop_table :uf
   end
 end

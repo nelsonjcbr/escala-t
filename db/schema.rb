@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_22_175041) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_26_162830) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -101,6 +101,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_22_175041) do
     t.string "api_senha"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "unidades_count"
     t.index ["cidade_id"], name: "index_estabelecimentos_on_cidade_id"
     t.index ["uf_id"], name: "index_estabelecimentos_on_uf_id"
   end
@@ -154,6 +155,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_22_175041) do
     t.string "numero_conselho"
     t.bigint "uf_conselho_id"
     t.jsonb "foto_data"
+    t.integer "role"
     t.index ["conselhoclass_id"], name: "index_users_on_conselhoclass_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
