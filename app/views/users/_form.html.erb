@@ -1,142 +1,92 @@
-<div class="page-heading">
-  <div class="page-title">
-    <div class="row">
-      <div class="col-12 col-md-6 order-md-1 order-last">
-        <h3><%= acao %> Usuário</h3>
-        <p class="text-subtitle text-muted"><%= subtitle %></p>
-      </div>
-      <div class="col-12 col-md-6 order-md-2 order-first">
-        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-            <li class="breadcrumb-item active"><%= link_to "Voltar", users_path %> </li>
-          </ol>
-        </nav>
+<%= simple_form_sh @user do |f| %> 
+
+  <%= render "shared/erros_cadastros", registro: @user %>
+
+  <%= f.input :role, 
+      as: :radio_buttons,
+      collection: User.roles.map { |key, value| [key.humanize, key] }, 
+      placeholder: "Papel", 
+      label: "Papel do usuário",
+      title: "Papel do usuário nesse aplicativo" %>
+  <%= f.input :name,
+        required: true,
+        autofocus: true,
+        placeholder: "Nome",
+        label: "Nome" %>
+  <%= f.input :nome_chamado,
+        required: true,
+        autofocus: true,
+        placeholder: "Nome Chamado", 
+        title: "Nome como é chamado, ex: Dr. João" %>
+  <%= f.input :cpf,
+        required: true,
+        autofocus: true,
+        placeholder: "CPF",
+        label: "CPF",
+        input_html: { autocomplete: "false", maxlength: 11 } %>
+  <%= f.input :email,
+        required: true,
+        autofocus: true,
+        placeholder: "Email",
+        input_html: { autocomplete: "false" } %>
+  <%= f.input :sexo, 
+        as: :radio_buttons,
+        collection: @sexos, 
+        placeholder: "Sexo" %>
+  <%= f.input :profissao, 
+        autofocus: true, 
+        placeholder: "Profissão" %>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="card-title">Registro no conselho</div>
+        <div class="row gx-3">
+          <%= f.input :conselhoclass_id, 
+                collection: @conselhoclasses, 
+                placeholder: "",
+                label: "Conselho Classe",
+                wrapper_html: { class: 'col-sm-5' } %>
+          <%= f.input :numero_conselho,
+                autofocus: true, 
+                placeholder: "",
+                title: "Número de registro no conselho profissional",
+                wrapper_html: { class: 'col-sm-4' } %>
+          <%= f.input :uf_conselho_id, 
+                collection: @ufs, 
+                placeholder: "UF",
+                title: "UF do conselho do registro",
+                wrapper_html: { class: 'col-sm-3' } %>
+        </div>
       </div>
     </div>
   </div>
 
-  <section class="section">
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-body">
-
-
-<%= form_with(model: user) do |form| %>
-  <% if user.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-        <% user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <section id="multiple-column-form">
-    <div class="row match-height">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-body">
-              <form class="form">
-                <div class="row">
-                  <div class="form-group col-12">
-                    <h5>Usuários</h5>
-
-                    <div class="col-md-6 col-12">
-                      <div class="form-group">
-                        <%= form.select :role, User.roles.map { |key, value| [key.humanize, key] }, { prompt: 'Papel' }, class: "form-control form-select", placeholder: "Papel", title: "Papel do usuário nesse aplicativo" %>
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-12">
-                      <div class="form-group">
-                        <%= form.text_field :name, class: "form-control", placeholder: "Nome do usuário", title: "Nome do usuário", required: true %>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-12">
-                    <div class="form-group">
-                      <%= form.text_field :nome_chamado, class: "form-control", placeholder: "Nome como é chamdo", title: "Nome como é chamado, ex: João, Silva", required: true %>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-12">
-                    <div class="form-group">
-                      <%= form.text_field :cpf, class: "form-control", placeholder: "CPF", title: "CPF", required: true %>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-12">
-                    <div class="form-group">
-                      <%= form.text_field :email, class: "form-control", placeholder: "email", title: "Email do usuário", required: true %>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-12">
-                    <div class="form-group">
-                      <%= form.select :sexo, @sexos, { prompt: 'Sexo'}, { class: "form-control form-select" } %>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-12">
-                    <div class="form-group">
-                      <%= form.text_field :profissao, class: "form-control", placeholder: "Profissão", title: "Sua profissão" %>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <h5>Registro no conselho</h5>
-                    <div class="col-md-3 col-12">
-                      <div class="form-group">
-                        <%= form.select :conselhoclass_id, @conselhoclasses , { prompt: 'Conselho'}, { class: "form-control form-select" ,  placeholder: "Selecione o conselho de classe", title: "Conselho de classe" } %>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                      <div class="form-group">
-                        <%= form.text_field :numero_conselho, class: "form-control", placeholder: "Número", title: "Número no conselho de classe" %>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                      <div class="form-group">
-                         <%= form.select :uf_conselho_id, @ufs, { prompt: 'Selecione a UF'}, { class: "form-control form-select" } %>
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="form-group">
-                        <%= form.label :foto %>
-                        <%= image_tag form.object.image_url if form.object.cached_foto_data %>
-                        <%= image_tag user.foto_url if user.foto_data %>
-                        <%= form.hidden_field :foto, value: form.object.cached_foto_data %>
-                        <%= form.file_field :foto %>
-                      </div>
-                    </div>
-                  </div>  
-                  <p>
-
-                  <div class="col-12 d-flex justify-content-end">
-                    <%= form.submit "Gravar", class: "btn btn-primary me-1 mb-1" %>
-                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
-                  </div>
-                </div>
-              </form>
-              <% if acao == "Edita" %>
-                <div>
-                  <%= link_to "Mostrar usuário", @user %>
-                </div>
-              <% end %>
-            </div>
-          </div>
+  <div class="card mb-3 border h-100 border-warning">
+    <div class="card-body">
+      <div class="card-title">Autenticação<small class="text-warning"> (só altere se necessário)</small></div>
+        <div class="row gx-2">
+          <%= f.input :password,
+                      required: true,
+                      placeholder: "Senha",
+                      input_html: { autocomplete: "off" },
+                      wrapper_html: { class: 'col-sm-6' } %>
+          <%= f.input :password_confirmation,
+                      required: true,
+                      placeholder: "Confirmação",
+                      input_html: { autocomplete: "off" },
+                      wrapper_html: { class: 'col-sm-6' } %>
+          <% unless @user.new_record? %>
+            <small>Deixe os campos da nova senha em branco caso não queira alterar</small>
+          <%end%>
         </div>
       </div>
     </div>
-  </section>
-
+  </div> 
+  <%= f.input :foto, 
+        input_html: { direct_upload: true } %>
+  <div class="mt-3 mb-3">
+    <%= f.submit "Gravar", class: "btn btn-primary" %>
+    <%= link_to "Voltar", users_path, class: "btn btn-secondary" %>
+  </div>
 <% end %>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
 

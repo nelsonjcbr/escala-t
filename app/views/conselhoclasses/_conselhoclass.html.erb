@@ -4,13 +4,12 @@
       <p>
       <div class="col-2"><b><%= conselhoclass.sigla %></b></div>
       <div class="col-6"> <%= conselhoclass.nome %></div>
-      <div class="col-2">
-        <%= link_to "Editar", edit_conselhoclass_path(conselhoclass), class: "btn btn-primary me-1 mb-1" %>
-      </div>
-      <div class="col-2">
-        <%= button_to "Excluir", conselhoclass, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger me-1 mb-1" %>
+      <div class="col-4">
+        <%= link_to "Editar", edit_conselhoclass_path(conselhoclass), class: "btn btn-primary" %>
+        <%= button_to "Excluir", conselhoclass, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger" %>
       </div>
       </p>
     </div>
   </div>
 <% end %>
+

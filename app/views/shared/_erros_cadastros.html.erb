@@ -1,0 +1,15 @@
+<% if registro.present? %>
+  <% if registro.errors.any? %>
+    <div class="alert alert-danger border-2 d-flex align-items-center" role="alert">
+      <div class="bg-danger me-3 icon-item"><span class="fas fa-times-circle text-white fs-3"></span></div>
+      <p class="mb-0 flex-1">
+        Não foi possível gravar o registro de <%= registro.model_name.human%> por causa de <%= pluralize(registro.errors.count, "erro", "erros") %>
+        <br>
+        <% registro.errors.full_messages.each do |error| %>
+          <br><%= error %>
+        <% end %>
+      </p>      
+      <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+<% end %>

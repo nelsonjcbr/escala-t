@@ -1,0 +1,18 @@
+<div class="toast-container top-0 end-0 p-3">
+    <% if flash[:success].present? %>
+        <%= render 'layouts/toast_item', titulo: "Sucesso", mensagem: flash[:success], classes: "bg-success text-light" %>
+    <% end %>
+    <% if flash[:notice].present? %>
+        <%= render 'layouts/toast_item', titulo: "Mensagem", mensagem: flash[:notice], classes: "bg-info text-light" %>
+    <% end %>
+    <% if flash[:error].present? %>
+        <%= render 'layouts/toast_item', titulo: "Erro", mensagem: flash[:error], classes: "bg-danger text-light" %>
+    <% end %>
+    <% if flash[:alert].present? %>
+        <%= render 'layouts/toast_item', titulo: "Alerta", mensagem: flash[:alert], classes: "bg-warning text-light" %>
+    <% end %>
+    <%#= render 'layouts/toast_item', titulo: "Sucesso", mensagem: "bg-success", classes: "bg-success text-light" %>
+    <%#= render 'layouts/toast_item', titulo: "Mensagem", mensagem: "bg-info", classes: "bg-info text-light" %>
+    <%#= render 'layouts/toast_item', titulo: "Erro", mensagem: "bg-danger text-light", classes: "bg-danger text-light" %>
+    <%#= render 'layouts/toast_item', titulo: "Alerta", mensagem: "bg-warning text-light", classes: "bg-warning text-light" %>
+</div>

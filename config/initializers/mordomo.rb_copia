@@ -1,0 +1,6 @@
+Mordomo.setup do |config|
+  config.set_host 'localhost'
+  config.set_port 7001
+  config.set_report_directory '/home/inovadora/g-hosp/cg/rels/'
+  config.set_database 'ghosp'
+end

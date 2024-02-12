@@ -73,6 +73,7 @@ class EscalacmptsController < ApplicationController
         inner join escalas       e  on e.escaladay_id=d.id
         inner join escalamembros em on em.escala_id=e.id
         inner join users         u  on u.id=em.membro_id
+        where ec.id = #{@escalacmpt.id}
         group by 1,2
       ")
   end

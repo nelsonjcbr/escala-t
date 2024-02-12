@@ -1,1 +1,22 @@
-<%= render "form", user: @user, acao: "Cria", subtitle:  "Cadastra usuário." %>
+<div class="card mb-3">
+  <div class="card-header">
+    <div class="row flex-between-end">
+      <div class="col-auto align-self-center">
+        <h5 class="mb-0" data-anchor="data-anchor">Novo <%= User.model_name.human%></h5>        
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body bg-light">
+    <div class="tab-content">
+      <div class="tab-pane preview-tab-pane active" role="tabpanel" aria-labelledby="tab-dom-071d002a-db29-4ada-a16d-4ce90c710ff3" id="dom-071d002a-db29-4ada-a16d-4ce90c710ff3">
+        <%= render "form", user: @user %>
+      </div>        
+    </div>
+  </div>
+</div>
+
+
+
+
+

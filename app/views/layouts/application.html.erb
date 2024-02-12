@@ -1,171 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <title>Escalat</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-  <%= stylesheet_link_tag "custom", "data-turbo-track": "reload" %>
-  <%= javascript_importmap_tags %>
-
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/bootstrap.css">
-  <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
-  <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
-  <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
-  <link rel="stylesheet" href="/assets/css/app.css">
-  <link rel="stylesheet" href="/assets/css/dark.css">
-</head>
-<body>
-
-  <div id="app">
+<html>
+  <head>
+    <title><%= Rails.application.class.module_parent_name %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
     
-    <% unless current_user.nil? %>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <div id="sidebar" class="active">
-        <div class="sidebar-wrapper active">
-          <div class="sidebar-header">
-            <div class="d-flex justify-content-between">
-              <div class="logo">
-                <a href="/"><img src="/assets/images/logo/logo.png" alt="Logo" srcset=""></a>
-              </div>
-              <div class="toggler">
-                <img src="/assets/images/moon-solid.svg" class="dark">
-                <img src="/assets/images/sun-solid.svg" class="light">
-                <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="sidebar-menu">
-          <ul class="menu">
-            <li class="sidebar-title">Menu</li>
+    <%= javascript_importmap_tags %>
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <%= favicon_link_tag 'img/favicons/apple-touch-icon.png', rel: 'apple-touch-icon', sizes: "180x180"%>
+    <%= favicon_link_tag 'img/favicons/favicon-32x32.png', rel: 'icon', type: 'image/png', sizes: "32x32"%>
+    <%= favicon_link_tag 'img/favicons/favicon-16x16.png', rel: 'icon', type: 'image/png', sizes: "16x16"%>
+    <%= favicon_link_tag 'img/favicons/favicon.ico', rel: 'shortcut icon', type: 'image/x-icon', sizes: "16x16"%>
 
-            <li class="sidebar-item active">
-              <a href="/escalacmpts" class='sidebar-link'>
-                <i class="fa-5 fa fa-calendar"></i>
-                <span>Escalas</span>
-              </a>
-            </li>
-          
-            <% if current_user.admin? || current_user.organizer? %>
-              <li class="sidebar-item  has-sub">
-                <a href="#" class='sidebar-link'>
-                  <i class="bi bi-stack"></i>
-                  <span>Configurações</span>
-                </a>
-                <ul class="submenu ">
-                  <% if can? :manage, Estabelecimento %>
-                    <li class="submenu-item ">
-                      <%= link_to 'Estabelecimentos', estabelecimentos_path %>
-                    </li>
-                  <% end %>
-                  <% if can? :manage, current_user %>
-                    <li class="submenu-item ">
-                      <a href="/users">Usuários</a>
-                    </li>
-                  <% end %>
-                  <% if can? :manage, Conselhoclass %>
-                    <li class="submenu-item ">
-                      <%= link_to 'Conselho Classes', conselhoclasses_path %>
-                    </li>
-                  <% end %>
-                  <% if can? :manage, Equipe %>
-                    <li class="submenu-item ">
-                      <%= link_to 'Equipes', equipes_path %>
-                    </li>
-                  <% end %>
-                </ul>
-              </li>
-              <hr>
-            <% end %>
+    <link rel="manifest" href="<%= asset_path("img/favicons/manifest.json")%>">
+    <meta name="msapplication-TileImage" content="<%= asset_path("img/favicons/mstile-150x150.png")%>">
+    <meta name="theme-color" content="#ffffff">
+    <%= javascript_include_tag "config", "funcoes", "simplebar.min", "jquery.min", "data-turbo-track": "reload", defer: true %>
 
-            <% if current_user.nil? %>
-              <li class="sidebar-item">
-                <a href="#" class='sidebar-link'>
-                  <i class="bi bi-stack"></i>
-                  <span><%= link_to "Conectar", new_user_session_path %>
-                </a>
-              </li>
-            <% else %>
-              <li class="sidebar-item  has-sub">
-                <a href="#" class='sidebar-link avatar'>
-                  <%= image_tag current_user.foto_url if current_user.foto_data %>
-                  <span> <%= current_user.nome_chamado unless current_user.nil? %> </span>
-                </a>
 
-                <ul class="submenu ">
-                  <li class="submenu-item ">
-                    <i class="fs-5 fa fa-user"></i>
-                    <%= link_to "Desconectar", destroy_user_session_path, "data-turbo-method": :delete, :class => 'dropdown-item' %>
-                  </li>
-                  <li class="submenu-item ">
-                    <%= link_to 'Meu Cadastro', user_path(current_user) %>
-                  </li>
-                  <% if can? :manage, current_user %>
-                    <li class="submenu-item ">
-                      <%= link_to "Usuários", users_path %>
-                    </li>
-                  <% end %>
-                </ul>
-              </li>
-            <% end %>
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
+    
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "simplebar.min", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "flatpickr.min", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "theme-rtl.min", "data-turbo-track": "reload", id:"style-rtl" %>
+    <%= stylesheet_link_tag "theme.min", "data-turbo-track": "reload", id:"style-default" %>
+    <%= stylesheet_link_tag "user-rtl.min", "data-turbo-track": "reload", id:"user-style-rtl" %>
+    <%= stylesheet_link_tag "user.min", "data-turbo-track": "reload", id:"user-style-default" %>
 
-            <% if current_user.admin? %>
-              <hr>       
-              <li class="sidebar-item active ">
-                <a href="https://technext.github.io/mazer/index.html" class='sidebar-link'>
-                  <i class="bi bi-grid-fill"></i>
-                  <span>Exemplos Mazer</span>
-                </a>
-              </li>
-            <% end %>
-          </ul>
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+    </script>
+
+    <%= javascript_include_tag "popper.min", "bootstrap.min", "anchor.min",
+                               "is.min", "all.min", "lodash.min", "data-turbo-track": "reload", defer: true %>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <%= javascript_include_tag "list.min", "theme", "data-turbo-track": "reload", defer: true%>
+    <%= javascript_include_tag "flatpickr", "data-turbo-track": "reload", defer: true%>
+
+  </head>
+
+  <body>    
+    <!-- ===============================================-->
+    <!--    Main Content-->
+    <!-- ===============================================-->    
+    <main class="main" id="top">      
+      <div class="container" data-layout="container">
+        <script>
+          //var isFluid = JSON.parse(localStorage.getItem('isFluid'));
+          var isFluid = true ;
+          if (isFluid) {
+            var container = document.querySelector('[data-layout]');
+            container.classList.remove('container');
+            container.classList.add('container-fluid');
+          }
+        </script>
+        <div id="janela_modal"></div>     
+        <%= render partial: "layouts/menu_lateral"%>
+        <div class="content">          
+          <%= render partial: "layouts/menu_top"%>
+          <%= yield %>
+          <%= render partial: "layouts/rodape"%>          
         </div>
-        <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
       </div>
+      <%= render partial: "layouts/mensagens_flash" %>
+    </main>
+    <!-- ===============================================-->
+    <!--    End of Main Content-->
+    <!-- ===============================================-->
+    <%= render "layouts/menu_config_layout"%>
+    <!-- ===============================================-->
+    <!--    JavaScripts-->
+    <!-- ===============================================-->
+    
 
-    <% end %>
-        
-      <div id="main">
-        <header class="mb-3">
-          <a href="#" class="burger-btn d-block d-xl-none">
-            <i class="bi bi-justify fs-3"></i>
-          </a>
-        </header>
-
-        <%= yield %>
-
-        <footer>
-          <div class="footer clearfix mb-0 text-muted">
-            <div class="float-start">
-              <p>2022 &copy; Escalat</p>
-            </div>
-            <div class="float-end">
-              <p>Criado com <span class="text-danger"><i class="bi bi-heart"></i></span> por 
-                <a href="http://www.inovadora.com.br">Rabbit's</a> layout Mazer <a href="http://ahmadsaugi.com">A. Saugi</a> 
-              </p>
-            </div>
-          </div>
-        </footer>
-      </div>
-    </div>
-  </div>
-  <script src="/assets/js/jquery.min.js"></script>
-  <script src="/assets/js/dark.js"></script>
-  <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-  <script src="/assets/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-  <!-- <script src="/assets/vendors/apexcharts/apexcharts.js"></script>
-  <script src="/assets/js/pages/dashboard.js"></script>
-  -->
-  <script src="/assets/js/mazer.js"></script>
-
-</body>
+  </body>
 
 </html>

@@ -1,0 +1,52 @@
+<%# refatorar e colocar em partials (thead/th e tbody/tr/td)
+    talvez até a partial inteira e criar um helper pra ficar igual no sistema inteiro%>
+<!-- TODO: Fazer funcionar ordenação por colunas -->
+<div id="div-tabela-users" data-list='{"valueNames":["id","nome","email","role"]}'>
+  <div class="table-responsive scrollbar">
+    
+    <table class="table table-hover">
+      <thead class="bg-200 text-900">
+        <tr>
+          <th class="sort" data-sort="id">Id</th>
+          <th class="sort" data-sort="nome">Nome</th>
+          <th class="sort" data-sort="email">Email</th>
+          <th class="sort" data-sort="papel">Papel</th>
+          <th class="text-end" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user|%>
+          <tr class="hover-actions-trigger">
+            <td class="id"><%= link_to user.id, user %></td>
+            <td class="nome align-middle text-nowrap">
+              <div class="d-flex align-items-center">
+                <div class="avatar avatar-xl">
+                  <%= image_tag user.foto_url, class: "rounded-circle" if current_user.foto_data %>                  
+                </div>
+                <div class="ms-2"><%= user.name  %></div>
+              </div>
+            </td>
+            <td class="email"><%= user.email%></td>
+            <td class="papel"><%= user.role %></td>
+            <td class="w-auto">
+              <div class="btn-group btn-group hover-actions end-0 me-0">
+                <%= link_to user, class: "btn btn-tertiary pe-1", title: "Visualizar", data: { bs_toggle: "tooltip", bs_placement: "top" } do %>
+                  <span class="fas fa-eye"></span>
+                <% end %>
+                <%= link_to edit_user_path(user), class: "btn btn-tertiary pe-1", title: "Editar", data: { bs_toggle: "tooltip", bs_placement: "top" } do %>
+                  <span class="fas fa-edit"></span>
+                <% end %>
+                <%= button_to user, title: "Excluir", data: { bs_toggle: "tooltip", bs_placement: "top", turbo_confirm: "Você tem certeza que deseja excluir?"  }, method: :delete,  class: "btn btn-tertiary ps-1" do %>
+                  <span class="fas fa-trash-alt"></span>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div> 
+  <%= paginate @users if @users.present?%>
+</div>
+

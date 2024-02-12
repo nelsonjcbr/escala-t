@@ -1,25 +1,43 @@
-<h2>Change your password</h2>
+<div class="row flex-center min-vh-100 py-6 text-center">
+  <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+    <a class="d-flex flex-center mb-4" href="<%= root_path%>">
+      <span class="font-sans-serif fw-bolder fs-5 d-inline-block">
+        <%= Rails.application.class.module_parent_name %>
+      </span>
+    </a>
+    <div class="card">
+      <div class="card-body p-4 p-sm-5">
+        <h5 class="mb-0">Mude sua senha</h5>
+        <%= simple_form_sh(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+          <%= f.error_notification %>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-  <%= f.hidden_field :reset_password_token %>
+          <%= f.input :reset_password_token, as: :hidden %>
+          <%= f.full_error :reset_password_token %>
 
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
-    <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
+          <div class="form-inputs">
+            <%= f.input :password,
+                  label: "Nova senha",
+                  required: true,
+                  autofocus: true,
+                  hint: ("No mínimo #{@minimum_password_length} caractere#{'s' if @minimum_password_length.to_i <> 1}" if @minimum_password_length),
+                  input_html: { autocomplete: "new-password" } %>
+            <%= f.input :password_confirmation,
+                        label: "Confirm your new password",
+                        required: true,
+                        input_html: { autocomplete: "new-password" } %>
+            <%= f.input :email,
+                        required: true,
+                        autofocus: true,
+                        input_html: { autocomplete: "email" },
+                        placeholder: "Email" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.button :submit, "Enviar instruções de mudança de senha", class: "btn btn-primary d-block w-100 mt-3" %>            
+          </div>
+        <% end %>
+        <a class="fs--1 text-600" href="#!">Não consigo recuperar minha conta por esta tela<span class="d-inline-block ms-1">&rarr;</span></a>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

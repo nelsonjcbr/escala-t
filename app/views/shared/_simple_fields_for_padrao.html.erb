@@ -1,0 +1,19 @@
+<div class="card bg-white">
+    <div class="card-header">
+      <div class="row flex-between-end">
+        <div class="col-auto align-self-center">
+          <h5 class="mb-0 card-title" data-anchor="data-anchor"><%= model.model_name.human%></h5>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+        <%= f.simple_fields_for model.model_name.param_key.pluralize, wrapper: :simple_fields_for do |ff| %>
+            <%= render partial: view_path.to_s + "/" +  model.model_name.param_key.to_s + '_fields', locals: {f: ff}%>
+        <% end %>
+        <% if add_fields_b %>
+            <div>
+                <p><%= link_to_add_fields "+Adicionar", f, model.model_name.param_key.pluralize, "", {class: "add_#{model.model_name.param_key.pluralize}"} %></p>
+            </div>
+        <% end %>
+    </div>    
+  </div> 

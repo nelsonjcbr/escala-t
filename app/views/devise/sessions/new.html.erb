@@ -1,45 +1,53 @@
-<div class="row h-100">
-    <div class="col-lg-5 col-12">
-        <div id="auth-left">
-            <div class="auth-logo">
-                <a href="index.html"><img src="/assets/images/logo/logo.png" alt="Logo"></a>
+<div class="row flex-center min-vh-100 py-6">
+  <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+    <a class="d-flex flex-center mb-4" href="<%= root_path%>">
+      <span class="font-sans-serif fw-bolder fs-5 d-inline-block"><%= Rails.application.class.module_parent_name %></span>
+    </a>
+    <div class="card">
+      <div class="card-body p-4 p-sm-5">
+        <div class="row flex-between-center mb-2">
+          <div class="col-auto">
+            <h5>Entrar</h5>
+          </div>
+        </div>
+        <%= simple_form_sh(resource, as: resource_name, url: session_path(resource_name), wrapper: 'vertical_form_devise') do |f| %>         
+          <%= render 'shared/erros_cadastros', registro: resource %>
+          <%= f.input :email,
+                      required: false,
+                      autofocus: true,
+                      input_html: { autocomplete: "email" },
+                      placeholder: "Email address" %>
+          <%= f.input :password,
+                      required: false,
+                      input_html: { autocomplete: "current-password" },
+                      placeholder: "Password" %>
+          <div class="row flex-between-center">
+            <div class="col-auto">
+              <%= f.input :remember_me, as: :boolean, 
+                          wrapper: :vertical_boolean_devise if devise_mapping.rememberable? %>
             </div>
-            <h1 class="auth-title">Conecte-se.</h1>
-            <p class="auth-subtitle mb-5">Entre com seu usuário e senha para se conectar.</p>
-
-            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-                <div class="form-group position-relative has-icon-left mb-4">
-                    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-xl", placeholder: "e-mail" %>
-                    <div class="form-control-icon">
-                        <i class="bi bi-person"></i>
-                    </div>
-                </div>
-                <div class="form-group position-relative has-icon-left mb-4">
-                    <%= f.password_field :password, autocomplete: "current-password", class: "form-control form-control-xl", placeholder: "Password" %>
-                    <div class="form-control-icon">
-                        <i class="bi bi-shield-lock"></i>
-                    </div>
-                </div>
-                <div class="form-check form-check-lg d-flex align-items-end">
-                    <%= f.check_box :remember_me, class: "form-check-input me-2", id: "flexCheckDefault" %>
-                    <%= f.label :remember_me, 'Lembre-me',  class:"form-check-label text-gray-600"%>
-                </div>
-                <%= f.submit "Conectar", data: { turbo: false }, class: "btn btn-primary btn-block btn-lg shadow-lg mt-5" %>
-            
-                <div class="text-center mt-5 text-lg fs-4">
-                    <p class="text-gray-600">Não tem uma conta? <a href="/users/sign_up" class="font-bold">Registre-se</a>.</p>
-                    <% if devise_mapping.rememberable? %>
-                    <p><a class="font-bold" href="/users/password/new">Esqueceu a senha?</a>.</p>
-                    <% end %>
-                </div>
-            <% end%>
-
+            <div class="col-auto">                          
+              <%= render "devise/shared/link_esqueceu_senha"%>
+            </div>
+          </div>
+          <div class="mb-3">
+            <%= f.button :submit, "Entrar", class: "btn btn-primary d-block w-100 mt-3" %>
+          </div>
+        <% end %>
+        <%
+=begin%>
+  removi, não sei se vai usar
+ <div class="position-relative mt-4">
+          <hr />
+          <div class="divider-content-center">or log in with</div>
         </div>
+        <div class="row g-2 mt-2">
+          <div class="col-sm-6"><a class="btn btn-outline-google-plus btn-sm d-block w-100" href="#"><span class="fab fa-google-plus-g me-2" data-fa-transform="grow-8"></span> google</a></div>
+          <div class="col-sm-6"><a class="btn btn-outline-facebook btn-sm d-block w-100" href="#"><span class="fab fa-facebook-square me-2" data-fa-transform="grow-8"></span> facebook</a></div>
+        </div> 
+<%
+=end%>
+      </div>
     </div>
-    
-    <div class="col-lg-7 d-none d-lg-block">
-        <div id="auth-right">
-
-        </div>
-    </div>
+  </div>
 </div>

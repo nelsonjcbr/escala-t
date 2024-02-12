@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-
+  #root "users#index"
+  devise_for :users
+  resources :users
   resources :escalacmpts do
     resources :escaladays
     get 'resumo'
@@ -15,16 +17,29 @@ Rails.application.routes.draw do
     end
     resources :unidades
   end
-  devise_for :users
-  resources :users
   get 'home/index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
   root "home#index"
 
-  #Paginas de examplos
-  get '/exemplos/index.html', to: 'exemplos#index', as: 'exemplos'
-  get '/exemplos/component-alert.html', to: 'exemplos#component-alert'
+  # API
+  namespace :api do
+    namespace :v1 do
+      resources :escalas
+    end
+    post "users_login" => "users#login"
+    post "users_logout" => "users#logout"
+  end
+
+  get '/verificar_localizacao', to: 'localizacao#index'
+  
+  match "/403", to: "errors#unacceptable", via: :all
+  match "/422", to: "errors#unprocessable", via: :all
+  match "/404", to: "errors#not_found", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
+  
+  # get "mordomo_error", to: "errors#mordomo_error", via: :all
+  get '*unmatched_route', to: 'errors#not_found'
   
 end

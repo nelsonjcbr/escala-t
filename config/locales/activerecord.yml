@@ -1,0 +1,39 @@
+# encoding: UTF-8
+# pt-BR translations for Ruby on Rails
+"pt-BR":
+  activerecord:
+    models:
+      user: "Usuário"
+      organization: "Organização"
+    attributes:
+      user:
+        email: "Email"
+        password: "Senha"
+        nome: "Nome"
+        remember_me: "Lembrar de mim"
+        password_confirmation: "Confirmação de senha"
+        current_password: "Senha atual"
+        created_at: "Criado em"
+        updated_at: "Atualizado em"
+      organization:
+        identifier: "Identificador"
+        active: "Ativo"
+        type: "Tipo"
+        name: "Nome"
+        alias: "Apelido"
+        telecom: "Contato"
+        address: "Endereço"
+        user: "Usuário"
+    errors:
+      template:
+        header:
+          one: "Não foi possível gravar %{model}: 1 erro"
+          other: "Não foi possível gravar %{model}: %{count} erros."
+        body: "Por favor, verifique o(s) seguinte(s) campo(s):"
+        
+      messages:
+        taken: "já está em uso"
+        record_invalid: "A validação falhou: %{errors}"
+
+      full_messages:
+        format: "%{attribute} %{message}"

@@ -1,0 +1,16 @@
+<% if "html" == request.format.symbol.to_s %>
+    <div class="row flex-center min-vh-100 py-6 text-center">
+        <div class="col-sm-10 col-md-8 col-lg-6 col-xxl-5">
+            <%= render "errors/link_welcome"%>
+            <div class="card">
+                <div class="card-body p-4 p-sm-5">
+                <div class="fw-black lh-1 text-300 fs-error-name">Mordomo</div>
+                <p class="lead mt-4 text-800 font-sans-serif fw-semi-bold">Desculpe, não foi possível executar o relatório!</p>
+                <hr />
+                <p><%= erro %></p>
+                <p>Tente recarregar a página ou voltar e tentar repetir a ação. Se este problema persistir, <a href="mailto:info@exmaple.com">Entre em contato</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<% end %>

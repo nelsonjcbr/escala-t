@@ -1,0 +1,43 @@
+<div id="<%= dom_id @user %>">
+
+  <div class="mb-3 row gy-2 gx-3 align-items-center">
+
+    <div class="col-sm-2"><%= image_tag @user.foto_url if @user.foto_data %></div>
+    <div class="col-sm-10"> 
+      <h4><%= @user.name %></h4>
+      Chamado por: <%= @user.nome_chamado %>
+    </div>
+
+    <hr class="hr">
+
+    <div class="col-sm-2">Papel</div>
+    <div class="col-sm-10 fw-bold"><%= @user.role %></div>
+
+    <div class="col-sm-2">CPF</div>
+    <div class="col-sm-10 fw-bold"><%= @user.cpf %></div>
+
+    <div class="col-sm-2">Email</div>
+    <div class="col-sm-10 fw-bold"><%= @user.email %></div>
+    
+    <div class="col-sm-2">Sexo</div>
+    <div class="col-sm-10 fw-bold"><%= @user.sexo %></div>
+
+    <div class="col-sm-2">Profissao</div>
+    <div class="col-sm-10 fw-bold"><%= @user.profissao %></div>
+
+    <div class="col-sm-2">Registro</div>
+    <div class="col-sm-10 fw-bold"><%= "#{@user.conselhoclass.sigla}-#{@user.numero_conselho}-#{@user.uf&.sigla}" %></div>
+
+    <div class="col-sm-2">Compõe as equipes</div>
+    <div class="col-sm-10 f2-bold">
+      <% @user.equipes.each do |equipe| %>
+        <li><%= equipe.nome %></li>
+      <% end %>
+    </div>
+    
+    <div class="col-sm-12 small mt-3">Criado em <%= @user.created_at.try(:strftime, "%d/%m/%Y %H:%M:%S") %>
+    Última alteração em <%= @user.updated_at.try(:strftime, "%d/%m/%Y %H:%M:%S") %>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= Rails.application.class.module_parent_name %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <%#= javascript_importmap_tags %>
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <%= favicon_link_tag 'img/favicons/apple-touch-icon.png', rel: 'apple-touch-icon', sizes: "180x180"%>
+    <%= favicon_link_tag 'img/favicons/favicon-32x32.png', rel: 'icon', type: 'image/png', sizes: "32x32"%>
+    <%= favicon_link_tag 'img/favicons/favicon-16x16.png', rel: 'icon', type: 'image/png', sizes: "16x16"%>
+    <%= favicon_link_tag 'img/favicons/favicon.ico', rel: 'shortcut icon', type: 'image/x-icon', sizes: "16x16"%>
+
+    <link rel="manifest" href="<%= asset_path("img/favicons/manifest.json")%>">
+    <meta name="msapplication-TileImage" content="<%= asset_path("img/favicons/mstile-150x150.png")%>">
+    <meta name="theme-color" content="#ffffff">
+    <%= javascript_include_tag "config", "simplebar.min", "jquery.min", "data-turbo-track": "reload", defer: true %>
+
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
+    
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "simplebar.min", "data-turbo-track": "reload" %>
+    
+    <%= stylesheet_link_tag "theme-rtl.min", "data-turbo-track": "reload", id:"style-rtl" %>
+    <%= stylesheet_link_tag "theme.min", "data-turbo-track": "reload", id:"style-default" %>
+    <%= stylesheet_link_tag "user-rtl.min", "data-turbo-track": "reload", id:"user-style-rtl" %>
+    <%= stylesheet_link_tag "user.min", "data-turbo-track": "reload", id:"user-style-default" %>
+
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+    </script>
+    
+    <%= javascript_include_tag "popper.min", "bootstrap.min", "anchor.min",
+                               "is.min", "all.min", "lodash.min", "data-turbo-track": "reload", defer: true %>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <%= javascript_include_tag "list.min", "theme", "data-turbo-track": "reload", defer: true%>
+
+  </head>
+
+  <body>    
+    <!-- ===============================================-->
+    <!--    Main Content-->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <div class="container" data-layout="container">
+        <script>
+          var isFluid = JSON.parse(localStorage.getItem('isFluid'));
+          if (isFluid) {
+            var container = document.querySelector('[data-layout]');
+            container.classList.remove('container');
+            container.classList.add('container-fluid');
+          }
+        </script>
+        
+        <%= yield %>
+        
+      </div>
+      <%= render partial: "layouts/mensagens_flash" %>
+    </main>
+    <!-- ===============================================-->
+    <!--    End of Main Content-->
+    <!-- ===============================================-->
+    <%#= render "layouts/menu_config_layout"%>
+    
+  </body>
+</html>

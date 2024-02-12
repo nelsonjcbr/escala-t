@@ -1,16 +1,35 @@
-<h2>Forgot your password?</h2>
+<div class="row flex-center min-vh-100 py-6 text-center">
+  <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+    <a class="d-flex flex-center mb-4" href="<%= root_path%>">
+      <span class="font-sans-serif fw-bolder fs-5 d-inline-block">
+        <%= Rails.application.class.module_parent_name %>
+      </span>
+    </a>
+    <div class="card">
+      <div class="card-body p-4 p-sm-5">
+        <h5 class="mb-0">Esqueceu sua senha? 
+          <span class="far fa-sad-cry fs-2"></span>
+        </h5>
+        <small>Informe o seu email e enviaremos as instruções para informar uma nova senha</small>
+        <%= simple_form_sh(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "mt-4" }) do |f| %>          <%= f.error_notification %>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+          <div class="form-inputs">
+            <%= f.input :email,
+                        required: true,
+                        autofocus: true,
+                        input_html: { autocomplete: "email" },
+                        placeholder: "Email" %>
+          </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          <div class="mb-3">
+            <%= f.button :submit, "Enviar instruções por email", class: "btn btn-primary d-block w-100 mt-3" %>            
+          </div>
+        <% end %>
+        <%= link_to root_path, class: "fs--1 text-600" do %>
+          Não consigo recuperar minha conta por esta tela
+          <span class="d-inline-block ms-1">&rarr;</span>
+        <% end %>
+      </div>
+    </div>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
