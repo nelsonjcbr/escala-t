@@ -45,7 +45,14 @@
   <%= form.fields_for :turnos do |turno_form| %>
     <%= render 'turno_fields', turno_form: turno_form %>
   <% end%>
-  
+
+  <!-- Campos para os membros -->
+  <%= form.fields_for :membros do |membro_form| %>
+    <%= render 'membro_fields', f: membro_form %>
+  <% end %>
+
+  <%= link_to "Adicionar Membro", "#", id: "add-membro-btn", data: { action: "click->equipe#addMembro" } %>
+
   <div class="col-12 d-flex justify-content-end">
     <%= form.submit "Gravar", class: "btn btn-primary me-1 mb-1" %>
     <%= link_to "Cancelar", equipes_path, class: "btn btn-light-secondary me-1 mb-1" %>

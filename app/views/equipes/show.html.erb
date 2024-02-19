@@ -40,7 +40,7 @@
             </div>
           <% end %>
           <div class="col-12 d-flex justify-content-end">
-            <%= link_to "Editar Membros", equipe_membros_path(@equipe), class: "btn btn-primary me-1 mb-1" %>
+            <%= link_to "Editar Membros", equipe_membros_path(@equipe), data: { turbo: false }, class: "btn btn-primary me-1 mb-1" %>
           </div>
         </div>
       </div>

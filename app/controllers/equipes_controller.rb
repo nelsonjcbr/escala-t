@@ -18,6 +18,7 @@ class EquipesController < ApplicationController
   def new
     @equipe = Equipe.new
     4.times { |i| @equipe.turnos.build(:ordem => i+1) }
+    @membro = @equipe.membros.build
   end
 
   # GET /equipes/1/edit
@@ -29,7 +30,6 @@ class EquipesController < ApplicationController
   # POST /equipes or /equipes.json
   def create
     @equipe = Equipe.new(equipe_params)
-    byebug
     @equipe.turnos.each { |turno| @equipe.turnos.destroy(turno) if turno.hora_inicio.nil? && turno.hora_fim.nil? }
 
     respond_to do |format|
@@ -45,7 +45,6 @@ class EquipesController < ApplicationController
 
   # PATCH/PUT /equipes/1 or /equipes/1.json
   def update
-    byebug
     # Apaga os turnos que já tem, senão duplica
     @equipe.turnos.each { |turno| @equipe.turnos.destroy(turno) }
     respond_to do |format|
@@ -85,8 +84,8 @@ class EquipesController < ApplicationController
   
     # Only allow a list of trusted parameters through.
     def equipe_params
-      params.require(:equipe).permit(:nome, :tipo_escala, :unidade_id, turnos_attributes: [
-        :ordem, :hora_inicio, :hora_fim
-        ])
+      params.require(:equipe).permit(:nome, :tipo_escala, :unidade_id, 
+        turnos_attributes: [ :ordem, :hora_inicio, :hora_fim],
+        membros_attributes: [:user_id, :_destroy])
     end
 end
