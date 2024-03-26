@@ -22,7 +22,7 @@
     <link rel="manifest" href="<%= asset_path("img/favicons/manifest.json")%>">
     <meta name="msapplication-TileImage" content="<%= asset_path("img/favicons/mstile-150x150.png")%>">
     <meta name="theme-color" content="#ffffff">
-    <%= javascript_include_tag "config", "funcoes", "simplebar.min", "jquery.min", "data-turbo-track": "reload", defer: true %>
+    <%= javascript_include_tag "config", "funcoes", "simplebar.min", "jquery.min", "jquery.mask.min", "data-turbo-track": "reload", defer: true %>
 
 
     <!-- ===============================================-->
@@ -60,10 +60,7 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
     <%= javascript_include_tag "list.min", "theme", "data-turbo-track": "reload", defer: true%>
     <%= javascript_include_tag "flatpickr", "data-turbo-track": "reload", defer: true%>
-
-  </head>
-
-  <body>    
+   <body>    
     <!-- ===============================================-->
     <!--    Main Content-->
     <!-- ===============================================-->    
@@ -82,6 +79,7 @@
         <%= render partial: "layouts/menu_lateral"%>
         <div class="content">          
           <%= render partial: "layouts/menu_top"%>
+          <%= render_breadcrumbs :separator => ' / ' %>
           <%= yield %>
           <%= render partial: "layouts/rodape"%>          
         </div>
@@ -95,8 +93,7 @@
     <!-- ===============================================-->
     <!--    JavaScripts-->
     <!-- ===============================================-->
-    
-
+   
   </body>
 
 </html>

@@ -1,42 +1,27 @@
-<p style="color: green"><%= notice %></p>
+<div class="card mb-3">
 
-<div class="page-heading">
-  <div class="page-title">
-    <div class="row">
-      <div class="col-12 col-md-6 order-md-1 order-last">
-        <h3>Unidades de Saúde de <%= @estabelecimento.nome %></h3>
-        <p class="text-subtitle text-muted">Mantém o cadastro das Unidades onde são feito os plantões.</p>
+  <p style="color: green"><%= notice %></p>
+
+  <div class="card-header">
+    <div class="row flex-between-end">
+      <div class="col-auto align-self-center">
+        <h5 class="mb-0 card-title" data-anchor="data-anchor">Unidades do estabelecimento: <%= @estabelecimento.nome %></h5>
       </div>
-      <div class="col-12 col-md-6 order-md-2 order-first">
-        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Checkout Page</li>
-          </ol>
-        </nav>
+      <div class="col-auto ms-auto">
+        <%= link_to "Novo", new_estabelecimento_unidade_path(@estabelecimento), data: { turbo_frame: "new_unidade" }, class: "btn btn-success me-1 mb-1" %>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6 col-12">
-        <%= link_to "Novo", new_estabelecimento_unidade_path(@estabelecimento), data: { turbo_frame: "new_unidade" }, class: "btn btn-success me-1 mb-1"  %>
-      </div>
-      <div class="col-md-6 col-12">
-        <div class="form-group position-relative has-icon-right">
-          <input type="text" class="form-control" placeholder="Procurar...">
-          <div class="form-control-icon">
-            <i class="bi bi-funnel"></i>
-          </div>
+  </div>
+
+  <%= turbo_frame_tag "new_unidade", target: "_top" %>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <%= render @unidades %>
         </div>
       </div>
     </div>
-
-    <%= turbo_frame_tag "new_unidade", target: "_top" %>
-
-    <section id="basic-horizontal-layouts">
-      <div class="row match-height">
-        <%= render @unidades %>
-      </div>
-    </section>
-    
   </div>
 </div>

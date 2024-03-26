@@ -1,25 +1,17 @@
-<p style="color: green"><%= notice %></p>
+<div class="conselhoclass-card">
 
-<section class="section">
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
+  <%= form_for([estabelecimento, unidade]) do |form| %>
+    <% if unidade.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(unidade.errors.count, "error") %> prohibited this unidade from being saved:</h2>
+        <ul>
+          <% unidade.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-<%= form_for([estabelecimento, unidade]) do |form| %>
-  <% if unidade.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(unidade.errors.count, "error") %> prohibited this unidade from being saved:</h2>
-
-      <ul>
-        <% unidade.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <section id="multiple-column-form">
     <div class="row match-height">
       <div class="col-12">
         <div class="card">
@@ -44,14 +36,8 @@
         </div>
       </div>
     </div>
-  </section>
 
-<% end %>
+  <% end %>
 
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 </div>
 

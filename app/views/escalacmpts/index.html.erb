@@ -1,42 +1,28 @@
 
-<p style="color: green"><%= notice %></p>
-
 <div class="card mb-3">
+
+  <p style="color: green"><%= notice %></p>
+
   <div class="card-header">
     <div class="row flex-between-end">
       <div class="col-auto align-self-center">
-        <h5 class="mb-0 card-title" data-anchor="data-anchor">Cadastro das escalas da competência.</h5>
+        <h5 class="mb-0 card-title" data-anchor="data-anchor">Cadastro das escalas da commpetência.</h5>
+      </div>
+      <div class="col-auto ms-auto">
+        <%= link_to "Novo", new_escalacmpt_path, data: { turbo_frame: "new_escalacmpt" }, class: "btn btn-success me-1 mb-1" %>
       </div>
     </div>
   </div>
-  <div class="card-body bg-light">
-    <div class="tab-content">
-      <div class="tab-pane preview-tab-pane active" role="tabpanel" aria-labelledby="tab-dom-071d002a-db29-4ada-a16d-4ce90c710ff3" id="dom-071d002a-db29-4ada-a16d-4ce90c710ff3">
-        <div id="div-lista-users">
-          <%= render @escalacmpts %>
-        </div>            
-      </div>      
-    </div>
-    <div class="d-flex flex-row mt-3 mb-3">
-      <div class="m-2"> <%= link_to "Novo", new_escalacmpt_path, data: { turbo_frame: "new_escalacmpt" }, class: "btn btn-success me-1 mb-1" %> </div>
-    </div>
-  </div>
-</div>
-
-  <%= turbo_frame_tag "new_escalacmpt", target: "_top" %>
-
+  
   <div id="escalacmpt">
-    <section class="section">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-              <!-- table strip dark -->
-              <%= render @escalacmpts %>
-            </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <%= render @escalacmpts %>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   </div>
 </div>

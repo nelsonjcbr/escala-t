@@ -18,7 +18,7 @@ class EquipesController < ApplicationController
   def new
     @equipe = Equipe.new
     4.times { |i| @equipe.turnos.build(:ordem => i+1) }
-    @membro = @equipe.membros.build
+    #20.times { |i| @equipe.membros.build() }
   end
 
   # GET /equipes/1/edit
@@ -31,6 +31,7 @@ class EquipesController < ApplicationController
   def create
     @equipe = Equipe.new(equipe_params)
     @equipe.turnos.each { |turno| @equipe.turnos.destroy(turno) if turno.hora_inicio.nil? && turno.hora_fim.nil? }
+    @equipe.membros.each { |membro| @equipe.membros.destroy(membro) if membros.user.nil? }
 
     respond_to do |format|
       if @equipe.save
@@ -47,6 +48,7 @@ class EquipesController < ApplicationController
   def update
     # Apaga os turnos que já tem, senão duplica
     @equipe.turnos.each { |turno| @equipe.turnos.destroy(turno) }
+    @equipe.membros.each { |membro| @equipe.membros.destroy(membro) if membros.user.nil? }
     respond_to do |format|
       if @equipe.update(equipe_params)
         format.html { redirect_to equipes_path, notice: "Equipe was successfully updated." }
@@ -86,6 +88,6 @@ class EquipesController < ApplicationController
     def equipe_params
       params.require(:equipe).permit(:nome, :tipo_escala, :unidade_id, 
         turnos_attributes: [ :ordem, :hora_inicio, :hora_fim],
-        membros_attributes: [:user_id, :_destroy])
+        membros_attributes: [:user_id, :destroy])
     end
 end

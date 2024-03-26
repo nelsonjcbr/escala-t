@@ -69,5 +69,6 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
   config.sass.inline_source_maps = true
 
-  config.hosts << "b0c1-177-131-122-58.ngrok-free.app"
+  config.hosts << "https://63b2-2804-8c0-75d4-a200-abe0-407c-ee89-7b0b.ngrok-free.app"
+  Rails.application.config.hosts = nil
 end

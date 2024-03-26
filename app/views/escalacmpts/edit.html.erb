@@ -34,7 +34,6 @@
     <%= form.select :membro_id, @membros, { prompt: "Selecione um membro..."}, { class: "form-control", placeholder: "Membro", title: "Membro" } %>
    
     <div id="escala">
-      <section class="section">
         <table class="table table-bordered" width="50%">
           <thead>
             <tr>
@@ -59,7 +58,7 @@
               <% if d.data.wday == 0 && i != 0 %>
                 </tr><tr>
               <% end %>
-              <td class="align-top"><div class="badge bg-dark">
+              <td class="align-top"><div class="badge bg-warning">
                 <b><%= d.data.day.to_s %></b>
                 </div>
                 <% d.escalas.each do |t| %>
@@ -80,7 +79,6 @@
             </tr>
          </tbody>
         </table>
-      </section>
     </div>
     <div class="col-12 d-flex justify-content-end">
       <%= form.submit "Gravar", class: "btn btn-primary me-1 mb-1" %>

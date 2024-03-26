@@ -21,7 +21,7 @@
 //= link theme.js
 //= link theme.min.js
 //= link funcoes.js
-
+//= link jquery.mask.min.js
 
 //= link user-rtl.min.css
 //= link user.min.css

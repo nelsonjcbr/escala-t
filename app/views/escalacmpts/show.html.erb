@@ -25,7 +25,7 @@
     <div class="row">    
       <div class="col-md-4 col-12">
         <div class="input-group mb-3">
-          <span class="input-group-text fa fa-search"></span>
+          <form class="input-group-text fa fa-search"></form>
           <%= f.select :membro_id, options_for_select(@membros, params[:membro_id]), { prompt: "Selecione um membro..."}, { class: "form-control", placeholder: "Membro", title: "Membro" } %>
         </div>
       </div>
@@ -42,7 +42,6 @@
   <% end %>
 
   <div id="escala">
-    <section class="section">
       <table class="table table-bordered" width="50%">
         <thead>
           <tr>
@@ -68,11 +67,14 @@
               </tr><tr>
             <% end %>
             <td class="align-top">
-              <div class="badge bg-dark">
+              <div class="badge bg-warning">
                 <b><%= d.data.day.to_s %></b>
               </div>
               <% d.escalas.each do |t| %>
-                <span class="fw-bold"><%= "Inicio: #{t.turno.hora_inicio.hour}h" %></span>
+                <span class="fw-bold">
+                  <br/>
+                  <%= "Inicio: #{t.turno.hora_inicio.hour}h" %>
+                </span>
                 <% t.escalamembros.each do |m| %>
                   <% unless params[:membro_id].present? && params[:membro_id].to_i != m.membro_id %>
                     <span class="fst-italic">
@@ -102,6 +104,5 @@
           </div>
         </div>
       <% end %>
-    </section>
   </div>
 </div>

@@ -26,7 +26,7 @@
     <div class="col-sm-10 fw-bold"><%= @user.profissao %></div>
 
     <div class="col-sm-2">Registro</div>
-    <div class="col-sm-10 fw-bold"><%= "#{@user.conselhoclass.sigla}-#{@user.numero_conselho}-#{@user.uf&.sigla}" %></div>
+    <div class="col-sm-10 fw-bold"><%= "#{@user.conselhoclass&.sigla}-#{@user.numero_conselho}-#{@user.uf&.sigla}" %></div>
 
     <div class="col-sm-2">Compõe as equipes</div>
     <div class="col-sm-10 f2-bold">

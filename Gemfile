@@ -28,6 +28,7 @@ gem "shrine", "~> 3.4"
 gem 'image_processing', '~> 1.12', '>= 1.12.2'
 gem "city-state", "~> 0.1.0"
 gem "rubocop-rails", "~> 2.19" # Verifica se código foi escrito da melhor forma
+gem "breadcrumbs_on_rails"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]

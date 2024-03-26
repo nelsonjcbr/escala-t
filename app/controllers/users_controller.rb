@@ -3,23 +3,38 @@ class UsersController < ApplicationController
 
   before_action :set_user, only: %i[ show edit update destroy ]
   before_action :set_selects, only: %i[ edit new update create]
-
+  before_action :set_tela
+  
+  add_breadcrumb "Home", :root_path
+  
   # GET /users or /users.json
   def index
-    @users = User.order(:id).page(params[:page]).per(10)
+    unless params[:search_query].nil? 
+      @users = User.search(params[:search_query]).order(:id).page(params[:page]).per(50)
+    else      
+      @users = User.order(:id).page(params[:page]).per(50)
+    end
+    add_breadcrumb "Usuários", users_path, title: "Volta para a lista"
   end
 
   # GET /users/1 or /users/1.json
   def show
+    add_breadcrumb "Usuários", users_path, title: "Volta para a lista"
+    add_breadcrumb @user.nome_chamado
   end
 
   # GET /users/new
   def new
     @user = User.new
+    add_breadcrumb "Usuários", users_path, title: "Volta para a lista"
+    add_breadcrumb "Novo"
   end
 
   # GET /users/1/edit
   def edit
+    add_breadcrumb "Usuários", users_path, title: "Volta para a lista"
+    add_breadcrumb @user.nome_chamado, @user
+    add_breadcrumb "Editar", edit_user_path(@user)
   end
 
   # POST /users or /users.json
@@ -63,6 +78,10 @@ class UsersController < ApplicationController
 
   private
   
+  def set_tela
+    session[:tela_origem] = 'users'
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.find(params[:id])

@@ -4,7 +4,8 @@
   activerecord:
     models:
       user: "Usuário"
-      organization: "Organização"
+      estabelecimento: "Estabelecimento"
+      uf: "Unidade da Federação"
     attributes:
       user:
         email: "Email"
@@ -15,15 +16,11 @@
         current_password: "Senha atual"
         created_at: "Criado em"
         updated_at: "Atualizado em"
-      organization:
-        identifier: "Identificador"
-        active: "Ativo"
-        type: "Tipo"
-        name: "Nome"
-        alias: "Apelido"
-        telecom: "Contato"
-        address: "Endereço"
-        user: "Usuário"
+      estabelecimento:
+        uf: "UF/Estado"
+        cidade: "Cidade"
+        nome: "Nome"
+        CNPJ: "CNPJ"
     errors:
       template:
         header:

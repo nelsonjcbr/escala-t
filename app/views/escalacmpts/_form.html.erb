@@ -29,6 +29,7 @@
                     <%= form.label :Competência, style: "display: block" %>
                     <%= form.text_field :cmpt, class: "form-control", minlength:7, maxlength:7, onkeypress:"$(this).mask('0000-00')", placeholder: "AAAA-MM", title: "Competência da escala (AAAAMM)", required: true %>
                     <%= errors_for escalacmpt, :cmpt %>
+    <input class="form-control" id="zipcodeInputmask" data-input-mask="{&quot;mask&quot;:&quot;99999-999&quot;}" placeholder="XXXXX-XXX" type="text" inputmode="text">
                   </div>
                   <div class="col-12 d-flex justify-content-end">
                     <%= form.submit "Gravar", class: "btn btn-primary me-1 mb-1" %>

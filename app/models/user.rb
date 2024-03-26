@@ -35,4 +35,8 @@ class User < ApplicationRecord
     return self.email.to_s.split("@").last == "inovadora.com.br"  
   end
 
+  def self.search(query)
+    where("name iLIKE ?", "%#{query}%")
+  end    
+
 end

@@ -1,0 +1,121 @@
+<!--HTML from anywhere-->
+<%= simple_form_sh @estabelecimento do |f| %> 
+
+  <%= render "shared/erros_cadastros", registro: @estabelecimento %>
+
+  <%= f.input :nome,
+        required: true,
+        autofocus: true,
+        placeholder: '',
+        label: "Nome do estabelecimento*" %>
+  <div class="row">
+    <div class="col">
+      <%= f.input :cnpj,
+            required: true,
+            autofocus: true,
+            placeholder: '',
+            label: "CNPJ*",
+            input_html: { minlength:18, maxlength:18, onkeypress:"$(this).mask('00.000.000/0000-00')" } %>
+    </div>
+    <div class="col">
+      <%= f.input :cnes,
+            required: true,
+            autofocus: true,
+            placeholder: '',
+            label: "Número do CNES*" %>
+    </div>
+  </div>
+
+  <h5>Endereço</h5>
+  <div class="row">
+    <div class="col">
+      <%= f.input :endereco,
+            required: true,
+            autofocus: true,
+            placeholder: '',
+            label: "Endereço, rua, avenida*" %>
+    </div>
+    <div class="col">
+      <%= f.input :end_numero,
+            required: true,
+            autofocus: true,
+            placeholder: '',
+            label: "Número" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <%= f.input :bairro,
+            autofocus: true,
+            placeholder: '',
+            label: "Bairro" %>
+    </div>
+    <div class="col">
+      <%= f.input :cep,
+            required: true,
+            autofocus: true,
+            placeholder: '',
+            label: "CEP" %>
+    </div>
+  </div>
+  <div data-controller="uf">
+    <div class="row">
+      <div class="col">
+        <%= f.input :uf_id,
+              collection: @ufs,
+              autofocus: true,
+              placeholder: "",
+              label: "UF(estado)",
+              input_html: { data: { action: "change->uf#change" }, class: 'form-select' } %>
+      </div>
+      <div class="col">
+        <%= f.input :cidade_id,
+              collection: @cidades,
+              autofocus: true,
+              placeholder: "",
+              label: "Cidade",
+              input_html: { data: { uf_target: "cidadeSelect"}, class: 'form-select' } %>
+      </div>
+    </div>
+  </div>
+  <h5>Acesso a API de integração</h5>
+  <div class="row">
+    <div class="col-md-5 col-12">
+      <%= f.input :api_usuario,
+            autofocus: true,
+            placeholder: "Usuário da API",
+            label: "Usuário da API" %>
+    </div>
+    <div class="col-md-3 col-12">
+      <%= f.input :api_senha,
+            autofocus: true,
+            placeholder: "Senha da API",
+            label: "Senha da API" %>
+    </div>
+    <div class="col-md-4 col-12">
+      <%= f.input :api_url,
+            autofocus: true,
+            placeholder: "URL da API",
+            label: "URL da API" %>
+    </div>
+  </div>
+  <%= f.button :button, 
+        "Teste de Conexão",
+        class: "btn btn-light-secondary me-1 mb-1" %>  
+
+  <div class="col-12 d-flex justify-content-end">
+    <div class="mt-3 mb-3">
+      <%= f.submit "Gravar", class: "btn btn-primary me-1 mb-1" %>
+      <%= f.button :button, 
+            "limpar",
+            class: "btn btn-light-secondary me-1 mb-1" %>  
+    </div>
+    <% if acao == "Edita" %>
+      <div>
+        <%= link_to "Mostrar Estabelecimento", @estabelecimento %>
+      </div>
+    <% end %>
+  </div>
+
+<% end %>
+

@@ -4,9 +4,12 @@ class UnidadesController < ApplicationController
   before_action :set_unidade, only: %i[ show edit update destroy ]
   before_action :set_estabelecimento, only: %i[index edit new show]
 
+  add_breadcrumb "Home", :root_path
+  
   # GET /unidades or /unidades.json
   def index
     @unidades = Unidade.where(estabelecimento_id: params[:estabelecimento_id])
+    add_breadcrumb @estabelecimento.nome, @estabelecimento, title: "Volta para o estabelecimento"
   end
 
   # GET /unidades/1 or /unidades/1.json

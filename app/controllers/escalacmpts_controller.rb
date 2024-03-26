@@ -7,8 +7,12 @@ class EscalacmptsController < ApplicationController
 
   # GET /escalacmpts or /escalacmpts.json
   def index
-    @escalacmpts = Escalacmpt.all
-  end
+    unless params[:search_query].nil?
+      @escalacmpts = Escalacmpt.search(params[:search_query]).order('cmpt desc, equipe_id').page(params[:page]).per(50)
+    else
+      @escalacmpts = Escalacmpt.order('cmpt desc, equipe_id').page(params[:page]).per(50)
+    end
+  end 
 
   # GET /escalacmpts/1 or /escalacmpts/1.json
   def show

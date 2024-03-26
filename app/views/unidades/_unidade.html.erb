@@ -1,17 +1,13 @@
-<div class="col-md-6 col-12">
-
-  <%= turbo_frame_tag unidade do %>
-
-    <div class="card">
-      <div class="card-body"> 
-        <div class="row">
-          <strong><%= link_to unidade.nome, estabelecimento_unidade_url(@estabelecimento, unidade) %></strong>
-        </div>
-        <div class="row">
-          <label><%= "#{unidade.equipes.size} Equipes" %></label>
-        </div>
-      </div>
+<%= turbo_frame_tag unidade do %>
+  <div class="row match-height">
+  
+    <div class="col-md-4 col-6">
+      <strong><%= link_to unidade.nome, estabelecimento_unidade_url(@estabelecimento, unidade) %></strong>
     </div>
-  <% end %>
-</div>
-
+    <div class="col-md-8 col-6">
+      <label><%= "#{unidade.equipes.size} Equipes" %></label>
+    </div>
+  </div>
+  
+<% end %>
+<hr>

@@ -1,8 +1,17 @@
 class ConselhoclassesController < ApplicationController
   load_and_authorize_resource
+
+  before_action :seta_tela
+
+  add_breadcrumb "Home", :root_path
   
   def index
-    @conselhoclasses = Conselhoclass.ordenado
+    unless params[:search_query].nil?
+      @conselhoclasses = Conselhoclass.search(params[:search_query]).ordenado
+    else
+      @conselhoclasses = Conselhoclass.ordenado
+    end
+    add_breadcrumb "Conselhos de Classe", conselhoclasses_path, title: "Volta para a lista"
   end
 
   def new
@@ -42,5 +51,9 @@ class ConselhoclassesController < ApplicationController
 
   def conselhoclass_params
     params.require(:conselhoclass).permit(:sigla, :nome)
+  end
+
+  def seta_tela
+    session[:tela_origem] = 'conselhoclasses'
   end
 end

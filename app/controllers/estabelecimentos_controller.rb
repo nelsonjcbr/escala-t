@@ -4,24 +4,34 @@ class EstabelecimentosController < ApplicationController
   before_action :authenticate_user!
   before_action :set_estabelecimento, only: %i[ show edit update destroy ]
   before_action :carrega_cidades, only: %i[ new edit update create ]
+  before_action :carrega_ufs, only: %i[ new edit update create ]
 
+  add_breadcrumb "Home", :root_path
+  
   # GET /estabelecimentos or /estabelecimentos.json
   def index
     @estabelecimentos = Estabelecimento.all.includes([:cidade, :uf])
+    add_breadcrumb "Estabelecimentos", estabelecimentos_path, title: "Volta para a lista"
   end
 
   # GET /estabelecimentos/1 or /estabelecimentos/1.json
   def show
+    add_breadcrumb "Estabelecimentos", estabelecimentos_path, title: "Volta para a lista"
+    add_breadcrumb @estabelecimento.nome, @estabelecimento
   end
 
   # GET /estabelecimentos/new
   def new
     @estabelecimento = Estabelecimento.new
     #@cidades = Cidade.order(:nome).where(uf: uf_sel).collect {|i| [ i.nome, i.id ] } 
+    add_breadcrumb "Estabelecimentos", estabelecimentos_path, title: "Volta para a lista"
+    add_breadcrumb "Novo"
   end
 
   # GET /estabelecimentos/1/edit
   def edit
+    add_breadcrumb "Estabelecimentos", estabelecimentos_path, title: "Volta para a lista"
+    add_breadcrumb "Editar", edit_estabelecimento_path(@estabelecimento)
   end
 
   # POST /estabelecimentos or /estabelecimentos.json
@@ -75,6 +85,9 @@ class EstabelecimentosController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_estabelecimento
       @estabelecimento = Estabelecimento.find(params[:id])
+    end
+    def carrega_ufs
+      @ufs = Uf.order(:nome).collect {|i| [ i.nome, i.id ] }
     end
 
     def carrega_cidades

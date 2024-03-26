@@ -1,0 +1,5 @@
+<!-- app/views/shared/_membro_fields.html.erb -->
+<div class="row" >
+  <%= membro_form.label :user_id, 'Usuário', style: "display: block" %>
+  <%= membro_form.select :user_id, User.all.collect { |i| [i.name, i.id] }, {prompt: 'Selecione'} , { class: "form-control form-select", required: true } %>
+</div>

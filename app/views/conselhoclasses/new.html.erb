@@ -1,9 +1,16 @@
-<h1>Novo Conselho de Classe</h1>
 
 <%= turbo_frame_tag @conselhoclass do %>
-  <%= render "form", conselhoclass: @conselhoclass %>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body"><h2>Novo</h2>
+          <%= render "form", conselhoclass: @conselhoclass %>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#error-modal">Launch demo modal</button>
+<button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#error-modal">Demo modal</button>
 <div class="modal fade" id="error-modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
     <div class="modal-content position-relative">
