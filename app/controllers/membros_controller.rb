@@ -4,9 +4,13 @@ class MembrosController < ApplicationController
   before_action :set_membro, only: %i[ show edit update destroy ]
   before_action :set_equipe, only: %i[index edit new]
 
+  add_breadcrumb "Home", :root_path
+  
   # GET /membros or /membros.json
   def index
     @membros = Membro.where(equipe_id: params[:equipe_id])
+    add_breadcrumb @equipe.nome, equipe_path(@equipe)
+    add_breadcrumb "Membros", equipe_membros_path(@equipe)
   end
 
   # GET /membros/1 or /membros/1.json

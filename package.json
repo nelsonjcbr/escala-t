@@ -12,6 +12,7 @@
     "jquery": "^3.7.1",
     "jquery-mask-plugin": "^1.14.16",
     "sass": "^1.49.8",
+    "slim-select": "^2.8.2",
     "stimulus-autocomplete": "^3.0.2"
   },
   "scripts": {

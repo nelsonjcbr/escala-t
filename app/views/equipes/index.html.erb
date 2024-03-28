@@ -1,41 +1,29 @@
-<p style="color: green"><%= notice %></p>
+<div class="card mb-3">
 
-<div class="page-heading">
-  <div class="page-title">
-    <div class="row">
-      <div class="col-12 col-md-6 order-md-1 order-last">
-        <h3>Equipes</h3>
+  <p style="color: green"><%= notice %></p>
+
+  <div class="card-header">
+    <div class="row flex-between-end">
+      <div class="col-auto align-self-center">
+        <h5 class="mb-0 card-title" data-anchor="data-anchor">Equipes</h5>
         <p class="text-subtitle text-muted">Mantém o cadastro das equipes que trabalham nas Unidades de Saúde.</p>
       </div>
-      <div class="col-12 col-md-6 order-md-2 order-first">
-        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Checkout Page</li>
-          </ol>
-        </nav>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 col-12">
+      <div class="col-auto ms-auto">
         <%= link_to "Novo", new_equipe_path, data: { turbo_frame: "new_equipe" }, class: "btn btn-success me-1 mb-1" %>
-      </div>
-      <div class="col-md-6 col-12">
-        <div class="form-group position-relative has-icon-right">
-          <input type="text" class="form-control" placeholder="Procurar...">
-          <div class="form-control-icon">
-            <i class="bi bi-funnel"></i>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 
   <%= turbo_frame_tag "new_equipe", target: "_top" %>
-
-  <section id="basic-horizontal-layouts">
-    <div class="row match-height">
-      <%= render @equipes %>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <%= render @equipes %>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
+
 </div>
+

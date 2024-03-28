@@ -1,5 +1,11 @@
-<h1>Novo Turno</h1>
-
 <%= turbo_frame_tag @equipe do %>
-  <%= render "form", equipe: @equipe %>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body"><h2>Novo</h2>
+          <%= render "form", equipe: @equipe %>
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>

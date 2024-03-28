@@ -5,6 +5,10 @@ class EscalacmptsController < ApplicationController
   before_action :set_selects, only: %i[ edit new update create]
   before_action :set_membros, only: %i[ show edit update]
 
+  before_action :seta_tela
+
+  add_breadcrumb "Home", :root_path
+
   # GET /escalacmpts or /escalacmpts.json
   def index
     unless params[:search_query].nil?
@@ -12,20 +16,23 @@ class EscalacmptsController < ApplicationController
     else
       @escalacmpts = Escalacmpt.order('cmpt desc, equipe_id').page(params[:page]).per(50)
     end
+    add_breadcrumb "Escalas", escalacmpts_path
   end 
 
   # GET /escalacmpts/1 or /escalacmpts/1.json
   def show
-  
+    add_breadcrumb "Escalas", escalacmpts_path, title: 'Volta a lista de escalas'
   end
 
   # GET /escalacmpts/new
   def new
     @escalacmpt = Escalacmpt.new
+    add_breadcrumb "Escalas", escalacmpts_path, title: 'Volta a lista de escalas'
   end
 
   # GET /escalacmpts/1/edit
   def edit
+    add_breadcrumb "Escalas", escalacmpts_path, title: 'Volta a lista de escalas'
   end
 
   # POST /escalacmpts or /escalacmpts.json
@@ -95,6 +102,10 @@ class EscalacmptsController < ApplicationController
     def set_membros 
       @membros = @escalacmpt.equipe.membros.collect {|e| [e.user.nome_chamado, e.user.id] }
     end 
+
+    def seta_tela
+      session[:tela_origem] = 'escalacmpts'
+    end
 
     # Only allow a list of trusted parameters through.
     def escalacmpt_params

@@ -4,14 +4,23 @@ class EquipesController < ApplicationController
   before_action :set_equipe, only: %i[ show edit update destroy ]
   before_action :set_tiposescala, only: %i[ edit new update create]
   before_action :set_selects, only: %i[ edit new update create]
+  before_action :seta_tela
+
+  add_breadcrumb "Home", :root_path
 
   # GET /equipes or /equipes.json
   def index
-    @equipes = Equipe.all
+    unless params[:search_query].nil?
+      @equipes = Equipe.includes(:membros).search(params[:search_query]).ordenado
+    else
+      @equipes = Equipe.includes(:membros).all
+    end
+    add_breadcrumb "Equipes", equipes_path, title: 'Volta a lista'
   end
 
   # GET /equipes/1 or /equipes/1.json
   def show
+    add_breadcrumb "Equipes", equipes_path, title: 'Volta a lista'
   end
 
   # GET /equipes/new
@@ -81,7 +90,11 @@ class EquipesController < ApplicationController
     end
 
     def set_selects 
-      @unidades = Unidade.all.collect { |i| [i.nome, i.id] }
+      @unidades = Unidade.includes(:estabelecimento).all.collect { |i| [i.nome+' #'+i.estabelecimento.nome, i.id] }
+    end
+
+    def seta_tela
+      session[:tela_origem] = 'equipes'
     end
   
     # Only allow a list of trusted parameters through.

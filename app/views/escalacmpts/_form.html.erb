@@ -12,36 +12,33 @@
     </div>
   <% end %>
 
-  <section id="multiple-column-form">
-    <div class="row match-height">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-body">
-              <form class="form">
-                <div class="row g-2">
-                  <div class="form-group col-md-4 col-12">
-                    <%= form.label :Equipe, style: "display: block" %>
-                    <%= form.select :equipe_id, @equipes, { prompt: "Selecione..."}, { class: "form-control", placeholder: "Equipe", title: "Equipe", required: true } %>
-                    <%= errors_for escalacmpt, :sigla %>
-                  </div>
-                  <div class="form-group col-md-4 col-12">
-                    <%= form.label :Competência, style: "display: block" %>
-                    <%= form.text_field :cmpt, class: "form-control", minlength:7, maxlength:7, onkeypress:"$(this).mask('0000-00')", placeholder: "AAAA-MM", title: "Competência da escala (AAAAMM)", required: true %>
-                    <%= errors_for escalacmpt, :cmpt %>
-    <input class="form-control" id="zipcodeInputmask" data-input-mask="{&quot;mask&quot;:&quot;99999-999&quot;}" placeholder="XXXXX-XXX" type="text" inputmode="text">
-                  </div>
-                  <div class="col-12 d-flex justify-content-end">
-                    <%= form.submit "Gravar", class: "btn btn-primary me-1 mb-1" %>
-                    <%= link_to "Cancelar", escalacmpts_path, class: "btn btn-light-secondary me-1 mb-1" %>
-                  </div>
+  <div class="row match-height">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body">
+            <form class="form">
+              <div class="row g-2">
+                <div class="form-group col-md-4 col-12">
+                  <%= form.label :Equipe, style: "display: block" %>
+                  <%= form.select :equipe_id, @equipes, { prompt: "Selecione..."}, { class: "form-control", placeholder: "Equipe", title: "Equipe", required: true } %>
+                  <%= errors_for escalacmpt, :sigla %>
                 </div>
-              </form>
-            </div>
+                <div class="form-group col-md-4 col-12">
+                  <%= form.label :Competência, style: "display: block" %>
+                  <%= form.text_field :cmpt, class: "form-control", minlength:7, maxlength:7, onkeypress:"$(this).mask('0000-00')", placeholder: "AAAA-MM", title: "Competência da escala (AAAAMM)", required: true %>
+                  <%= errors_for escalacmpt, :cmpt %>
+                </div>
+                <div class="col-12 d-flex justify-content-end">
+                  <%= form.submit "Gravar", class: "btn btn-primary me-1 mb-1" %>
+                  <%= link_to "Cancelar", escalacmpts_path, class: "btn btn-light-secondary me-1 mb-1" %>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
   <% end %>
 </div>

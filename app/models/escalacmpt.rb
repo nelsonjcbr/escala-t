@@ -3,6 +3,10 @@ class Escalacmpt < ApplicationRecord
   has_many :escaladays, dependent: :destroy 
   after_create :gera_escalas_cmpt
 
+  def self.search(query)
+    joins(:equipe).where("cmpt::varchar ilike ? or equipes.nome ilike ?", "%#{query}%", "%#{query}%")
+  end
+
   def cmpt_formatada
     sCmpt = self[:cmpt].to_s
     sCmpt[0..3] + '-' + sCmpt[4..5]

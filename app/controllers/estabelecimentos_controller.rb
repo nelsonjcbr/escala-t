@@ -6,11 +6,17 @@ class EstabelecimentosController < ApplicationController
   before_action :carrega_cidades, only: %i[ new edit update create ]
   before_action :carrega_ufs, only: %i[ new edit update create ]
 
+  before_action :seta_tela
+
   add_breadcrumb "Home", :root_path
   
   # GET /estabelecimentos or /estabelecimentos.json
   def index
-    @estabelecimentos = Estabelecimento.all.includes([:cidade, :uf])
+    unless params[:search_query].nil?
+      @estabelecimentos = Estabelecimento.includes([:cidade, :uf]).search(params[:search_query])
+    else
+      @estabelecimentos = Estabelecimento.all.includes([:cidade, :uf])
+    end
     add_breadcrumb "Estabelecimentos", estabelecimentos_path, title: "Volta para a lista"
   end
 
@@ -96,6 +102,10 @@ class EstabelecimentosController < ApplicationController
       else  
         @cidades = Cidade.order(:nome).where(uf: @estabelecimento.uf_id).collect {|i| [ i.nome, i.id ] } 
       end
+    end
+
+    def seta_tela
+      session[:tela_origem] = "estabelecimentos"
     end
 
     # Only allow a list of trusted parameters through.

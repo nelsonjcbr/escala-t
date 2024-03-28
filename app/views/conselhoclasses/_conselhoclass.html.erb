@@ -1,18 +1,17 @@
 <%= turbo_frame_tag conselhoclass do %>
   <div class="conselhoclass-card">
-    <div class="row match-height">
-      <p>
-      <div class="col-3 col-md-2"><b><%= conselhoclass.sigla %></b></div>
+    <div class="row justify-content-start">
+      <div class="col-3 col-md-1"><b><%= conselhoclass.sigla %></b></div>
       <div class="col-9 col-md-5"> <%= conselhoclass.nome %></div>
-      <div class="col-3 col-md-2">
+      <div class="col-3 col-md-auto">
         <%= link_to "Editar", edit_conselhoclass_path(conselhoclass), class: "btn btn-primary" %>
       </div>
-      <div class="col-9 col-md-2">
+      <div class="col-9 col-md-auto">
         <%= button_to "Excluir", conselhoclass, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger" %>
       </div>
-      </p>
     </div>
     <hr>
   </div>
+
 <% end %>
 

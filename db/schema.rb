@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_13_180747) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_28_200241) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -74,6 +74,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_13_180747) do
   create_table "escalamembros", force: :cascade do |t|
     t.bigint "escala_id", null: false
     t.bigint "membro_id", null: false
+    t.boolean "avulso"
+    t.boolean "abonado"
+    t.datetime "check_in", precision: nil
+    t.datetime "check_out", precision: nil
     t.index ["escala_id"], name: "index_escalamembros_on_escala_id"
     t.index ["membro_id"], name: "index_escalamembros_on_membro_id"
   end
@@ -93,8 +97,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_13_180747) do
     t.string "end_numero"
     t.string "complemento"
     t.string "bairro"
-    t.bigint "uf_id", null: false
-    t.bigint "cidade_id", null: false
+    t.bigint "uf_id"
+    t.bigint "cidade_id"
     t.string "cep"
     t.string "api_url"
     t.string "api_usuario"
@@ -168,7 +172,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_13_180747) do
   add_foreign_key "escalacmpts", "equipes"
   add_foreign_key "escaladays", "escalacmpts"
   add_foreign_key "escalamembros", "escalas"
-  add_foreign_key "escalamembros", "membros"
+  add_foreign_key "escalamembros", "users", column: "membro_id"
   add_foreign_key "escalas", "escaladays"
   add_foreign_key "escalas", "turnos"
   add_foreign_key "estabelecimentos", "cidades"

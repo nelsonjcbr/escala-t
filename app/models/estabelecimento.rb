@@ -8,4 +8,8 @@ class Estabelecimento < ApplicationRecord
     self.cidade.nome+'('+self.uf.sigla + ')'
   end
 
+  def self.search(query)
+    where("nome ilike ?", "%#{query}%")
+  end
+
 end

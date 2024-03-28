@@ -1,32 +1,15 @@
-<p style="color: green"><%= notice %></p>
+<div class="card mb-3">
 
-<div class="page-heading">
-  <div class="page-title">
-    <div class="row">
-      <div class="col-12 col-md-6 order-md-1 order-last">
-        <h3>Membros Equipe <%= @equipe.nome %></h3>
+  <p style="color: green"><%= notice %></p>
+
+  <div class="card-header">
+    <div class="row flex-between-end">
+      <div class="col-auto align-self-center">
+        <h5>Membros Equipe <%= @equipe.nome %></53>
         <p class="text-subtitle text-muted">Mantém o cadastro das membros que trabalham nas Unidades de Saúde.</p>
       </div>
-      <div class="col-12 col-md-6 order-md-2 order-first">
-        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Checkout Page</li>
-          </ol>
-        </nav>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 col-12">
+      <div class="col-auto ms-auto">
         <%= link_to "Novo", new_equipe_membro_path(@equipe), data: { turbo_frame: "new_membro" }, class: "btn btn-success me-1 mb-1" %>
-      </div>
-      <div class="col-md-6 col-12">
-        <div class="form-group position-relative has-icon-right">
-          <input type="text" class="form-control" placeholder="Procurar...">
-          <div class="form-control-icon">
-            <i class="bi bi-funnel"></i>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -34,20 +17,15 @@
   <%= turbo_frame_tag "new_membro", target: "_top" %>
 
   <div id="membro">
-    <section class="section">
-      <div class="row" id="table-striped-dark">
-        <div class="col-12">
-          <div class="card">
-            <div class=card-title>
-              Membros da equipe <%= @equipe.nome %>
-            </div>
-            <div class="card-content">
-              <!-- table strip dark -->
-              <%= render @membros %>
-            </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <!-- table strip dark -->
+            <%= render @membros %>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   </div>
 </div>
