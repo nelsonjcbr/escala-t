@@ -1,15 +1,249 @@
-<h1>Home#index</h1>
 
 <% if current_user %>
-  <p>Olá <%= current_user.email %></p>
-  <p>Seja bem vindo ao Escalat, aqui você tem o controle da escala de trabalho da Instituição</p>
-  <p>Você pode 
-  <%= link_to "desconectar aqui", destroy_user_session_path, "data-turbo-method": :delete %>
-  <p>Você pode cadastrar um novo usuário 
-  <%= link_to "aqui", new_user_registration_path, data: { turbo: false } %>
-  </p>
+  <div class="col-12 mb-3">
+    <div class="card bg-body-tertiary dark__bg-opacity-50 shadow-none">
+      <div class="bg-holder bg-card d-none d-sm-block" style="background-image:url(../assets/img/illustrations/ticket-bg.png);"></div><!--/.bg-holder-->
+      <div class="d-flex align-items-center z-1 p-0"><img src="../assets/img/illustrations/bg-wave.png" alt="" width="90">
+        <div class="ms-n3">
+          <h6 class="mb-1 text-primary">Olá <%= current_user.name %>, bem-vindo! </h6>
+          <h4 class="mb-0 text-primary fw-bold">EscalaPlantão<span class="text-info fw-medium"> controle de escala de plantões</span></h4>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% unless current_user.user? %>
+    <p>Você pode cadastrar um novo usuário 
+    <%= link_to "aqui", new_user_registration_path, data: { turbo: false } %>
+    </p>
+  <% end %>
+
+  <div class="row g-3 mb-3">
+    <div class="col-xxl-6 col-lg-12">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row g-3 mb-3">
+            <div class="col-sm-6">
+              <div class="card overflow-hidden" style="min-width: 12rem">
+                <div class="bg-holder bg-card" style="background-image:url(../assets/img/icons/spot-illustrations/corner-2.png);"></div><!--/.bg-holder-->
+                <div class="card-body position-relative">
+                  <h6>Plantão a abrir <B><%= @plantao_para_check_in&.equipe_nome %></b></h6>
+                  <div class="display-4 fs-5 mb-2 fw-normal font-sans-serif text-info">
+                    <% if @plantao_para_check_in.nil? %>
+                      <%= "Nenhum" %>
+                    <% else %>
+                      <small><%= @plantao_para_check_in.inicio.strftime("%d/%m") %> - </small>
+                      <%=  @plantao_para_check_in.inicio.strftime("%H:%M") %>
+                      <%= link_to "Check-In", abrir_plantao_plantao_path(@plantao_para_check_in), method: :post, class: "btn btn-success me-1 mb-1" %>
+                    <% end %>
+                  </div>
+                  <!-- 
+                  <a class="fw-semi-bold fs-10 text-nowrap" href="../app/e-commerce/orders/order-list.html">All orders
+                    <svg class="svg-inline--fa fa-angle-right fa-w-8 ms-1" data-fa-transform="down-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="" style="transform-origin: 0.25em 0.5625em;"><g transform="translate(128 256)"><g transform="translate(0, 32)  scale(1, 1)  rotate(0 0 0)"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z" transform="translate(-128 -256)"></path></g></g>
+                    </svg> 
+                    -->
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <% unless @plantao_para_check_out.nil? %>
+                <div class="card overflow-hidden" style="min-width: 12rem">
+                  <div class="bg-holder bg-card" style="background-image:url(../assets/img/icons/spot-illustrations/corner-1.png);"></div><!--/.bg-holder-->
+                  <div class="card-body position-relative">
+                    <h6>Existe um Plantão aberto</h6>
+                    <div class="display-4 fs-5 mb-2 fw-normal font-sans-serif text-warning" data-countup="{&quot;endValue&quot;:58.386,&quot;decimalPlaces&quot;:2,&quot;suffix&quot;:&quot;k&quot;}">
+                      <small><%= @plantao_para_check_out.inicio.strftime("%d/%m") %> - </small>
+                      <%=  @plantao_para_check_out.inicio.strftime("%H:%M") %>
+                      <%= link_to "Check-Out", fechar_plantao_plantao_path(@plantao_para_check_out), method: :post, class: "btn btn-success me-1 mb-1" %>
+                    </div>
+                    <!--
+                    <a class="fw-semi-bold fs-10 text-nowrap" href="../app/e-commerce/customers.html">See all
+                      <svg class="svg-inline--fa fa-angle-right fa-w-8 ms-1" data-fa-transform="down-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="" style="transform-origin: 0.25em 0.5625em;"><g transform="translate(128 256)"><g transform="translate(0, 32)  scale(1, 1)  rotate(0 0 0)"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z" transform="translate(-128 -256)"></path></g></g>
+                      </svg>
+                    -->
+                    </a>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-6 col-lg-6 order-xxl-1">
+      <div class="card h-100">
+        <div class="card-header">
+          <h6 class="mb-0">Recent Activity</h6>
+        </div>
+        <div class="card-body scrollbar recent-activity-body-height ps-2">
+          <div class="row g-3 timeline timeline-primary timeline-past pb-x1">
+            <div class="col-auto ps-4 ms-2">
+              <div class="ps-2">
+                <div class="icon-item icon-item-sm rounded-circle bg-200 shadow-none"><svg class="svg-inline--fa fa-envelope fa-w-16 text-primary" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg><!-- <span class="text-primary fas fa-envelope"></span> Font Awesome fontawesome.com --></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="row gx-0 border-bottom pb-x1">
+                <div class="col">
+                  <h6 class="text-800 mb-1">Antony Hopkins sent an Email</h6>
+                  <p class="fs-10 text-600 mb-0">Got an email for previous year sale report</p>
+                </div>
+                <div class="col-auto">
+                  <p class="fs-11 text-500 mb-0">2m ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-3 timeline timeline-primary timeline-past pb-x1">
+            <div class="col-auto ps-4 ms-2">
+              <div class="ps-2">
+                <div class="icon-item icon-item-sm rounded-circle bg-200 shadow-none"><svg class="svg-inline--fa fa-archive fa-w-16 text-primary" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="archive" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M32 448c0 17.7 14.3 32 32 32h384c17.7 0 32-14.3 32-32V160H32v288zm160-212c0-6.6 5.4-12 12-12h104c6.6 0 12 5.4 12 12v8c0 6.6-5.4 12-12 12H204c-6.6 0-12-5.4-12-12v-8zM480 32H32C14.3 32 0 46.3 0 64v48c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16V64c0-17.7-14.3-32-32-32z"></path></svg><!-- <span class="text-primary fas fa-archive"></span> Font Awesome fontawesome.com --></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="row gx-0 border-bottom pb-x1">
+                <div class="col">
+                  <h6 class="text-800 mb-1">Emma archived a board</h6>
+                  <p class="fs-10 text-600 mb-0">A finished project's board is archived recently</p>
+                </div>
+                <div class="col-auto">
+                  <p class="fs-11 text-500 mb-0">26m ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-3 timeline timeline-primary timeline-current pb-x1">
+            <div class="col-auto ps-4 ms-2">
+              <div class="ps-2">
+                <div class="icon-item icon-item-sm rounded-circle bg-200 shadow-none"><svg class="svg-inline--fa fa-code fa-w-20 text-primary" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="code" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg=""><path fill="currentColor" d="M278.9 511.5l-61-17.7c-6.4-1.8-10-8.5-8.2-14.9L346.2 8.7c1.8-6.4 8.5-10 14.9-8.2l61 17.7c6.4 1.8 10 8.5 8.2 14.9L293.8 503.3c-1.9 6.4-8.5 10.1-14.9 8.2zm-114-112.2l43.5-46.4c4.6-4.9 4.3-12.7-.8-17.2L117 256l90.6-79.7c5.1-4.5 5.5-12.3.8-17.2l-43.5-46.4c-4.5-4.8-12.1-5.1-17-.5L3.8 247.2c-5.1 4.7-5.1 12.8 0 17.5l144.1 135.1c4.9 4.6 12.5 4.4 17-.5zm327.2.6l144.1-135.1c5.1-4.7 5.1-12.8 0-17.5L492.1 112.1c-4.8-4.5-12.4-4.3-17 .5L431.6 159c-4.6 4.9-4.3 12.7.8 17.2L523 256l-90.6 79.7c-5.1 4.5-5.5 12.3-.8 17.2l43.5 46.4c4.5 4.9 12.1 5.1 17 .6z"></path></svg><!-- <span class="text-primary fas fa-code"></span> Font Awesome fontawesome.com --></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="row gx-0 border-bottom pb-x1">
+                <div class="col">
+                  <h6 class="text-800 mb-1">Falcon v3.0.0 released with new features</h6>
+                  <p class="fs-10 text-600 mb-0">Falcon new version is released successfully with new Dashboards</p>
+                </div>
+                <div class="col-auto">
+                  <p class="fs-11 text-500 mb-0">1h ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-3 timeline timeline-primary  pb-x1">
+            <div class="col-auto ps-4 ms-2">
+              <div class="ps-2">
+                <div class="icon-item icon-item-sm rounded-circle bg-200 shadow-none"><svg class="svg-inline--fa fa-code-branch fa-w-12 text-primary" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="code-branch" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M384 144c0-44.2-35.8-80-80-80s-80 35.8-80 80c0 36.4 24.3 67.1 57.5 76.8-.6 16.1-4.2 28.5-11 36.9-15.4 19.2-49.3 22.4-85.2 25.7-28.2 2.6-57.4 5.4-81.3 16.9v-144c32.5-10.2 56-40.5 56-76.3 0-44.2-35.8-80-80-80S0 35.8 0 80c0 35.8 23.5 66.1 56 76.3v199.3C23.5 365.9 0 396.2 0 432c0 44.2 35.8 80 80 80s80-35.8 80-80c0-34-21.2-63.1-51.2-74.6 3.1-5.2 7.8-9.8 14.9-13.4 16.2-8.2 40.4-10.4 66.1-12.8 42.2-3.9 90-8.4 118.2-43.4 14-17.4 21.1-39.8 21.6-67.9 31.6-10.8 54.4-40.7 54.4-75.9zM80 64c8.8 0 16 7.2 16 16s-7.2 16-16 16-16-7.2-16-16 7.2-16 16-16zm0 384c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16zm224-320c8.8 0 16 7.2 16 16s-7.2 16-16 16-16-7.2-16-16 7.2-16 16-16z"></path></svg><!-- <span class="text-primary fas fa-code-branch"></span> Font Awesome fontawesome.com --></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="row gx-0 border-bottom pb-x1">
+                <div class="col">
+                  <h6 class="text-800 mb-1">Rowan shared a link to the board</h6>
+                  <p class="fs-10 text-600 mb-0">A link is shared with attachments</p>
+                </div>
+                <div class="col-auto">
+                  <p class="fs-11 text-500 mb-0">3h ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-3 timeline timeline-primary">
+            <div class="col-auto ps-4 ms-2">
+              <div class="ps-2">
+                <div class="icon-item icon-item-sm rounded-circle bg-200 shadow-none"><svg class="svg-inline--fa fa-file-code fa-w-12 text-primary" aria-hidden="true" focusable="false" data-prefix="far" data-icon="file-code" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M149.9 349.1l-.2-.2-32.8-28.9 32.8-28.9c3.6-3.2 4-8.8.8-12.4l-.2-.2-17.4-18.6c-3.4-3.6-9-3.7-12.4-.4l-57.7 54.1c-3.7 3.5-3.7 9.4 0 12.8l57.7 54.1c1.6 1.5 3.8 2.4 6 2.4 2.4 0 4.8-1 6.4-2.8l17.4-18.6c3.3-3.5 3.1-9.1-.4-12.4zm220-251.2L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34zM256 51.9l76.1 76.1H256zM336 464H48V48h160v104c0 13.3 10.7 24 24 24h104zM209.6 214c-4.7-1.4-9.5 1.3-10.9 6L144 408.1c-1.4 4.7 1.3 9.6 6 10.9l24.4 7.1c4.7 1.4 9.6-1.4 10.9-6L240 231.9c1.4-4.7-1.3-9.6-6-10.9zm24.5 76.9l.2.2 32.8 28.9-32.8 28.9c-3.6 3.2-4 8.8-.8 12.4l.2.2 17.4 18.6c3.3 3.5 8.9 3.7 12.4.4l57.7-54.1c3.7-3.5 3.7-9.4 0-12.8l-57.7-54.1c-3.5-3.3-9.1-3.2-12.4.4l-17.4 18.6c-3.3 3.5-3.1 9.1.4 12.4z"></path></svg><!-- <span class="text-primary far fa-file-code"></span> Font Awesome fontawesome.com --></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="row gx-0">
+                <div class="col">
+                  <h6 class="text-800 mb-1">Anna updated a file</h6>
+                  <p class="fs-10 text-600 mb-0">Fixed some bugs and spelling errors on this update</p>
+                </div>
+                <div class="col-auto">
+                  <p class="fs-11 text-500 mb-0">4h ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-4 col-lg-6 order-xxl-3">
+      <div class="card h-100">
+        <div class="card-header bg-body-tertiary py-2 d-flex flex-between-center">
+          <h6 class="mb-0">Members Activity</h6>
+          <div class="dropdown font-sans-serif btn-reveal-trigger"><button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-members-activity" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs-11" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg><!-- <span class="fas fa-ellipsis-h fs-11"></span> Font Awesome fontawesome.com --></button>
+            <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-members-activity"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+              <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body members-activity scrollbar-overlay" data-simplebar="init"><div class="simplebar-wrapper" style="margin: -20px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: 0px;"><div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: 100%; overflow: hidden scroll;"><div class="simplebar-content" style="padding: 20px;">
+          <div class="row g-2 mb-4">
+            <div class="col-12 d-flex align-items-center">
+              <div class="avatar avatar-xl rounded-circle">
+                <img class="rounded-circle" src="../assets/img/team/4-thumb.png" alt="">
+              </div>
+              <h6 class="mb-0 ps-2">Chandler Bing</h6>
+            </div>
+            <div class="col-4 position-relative"><img class="w-100" src="../assets/img/management/activity-1.png" alt="...">
+              <div class="badge rounded-pill position-absolute top-100 start-50 translate-middle badge-subtle-danger">20%</div>
+            </div>
+            <div class="col-4 position-relative"><img class="w-100" src="../assets/img/management/activity-2.png" alt="...">
+              <div class="badge rounded-pill position-absolute top-100 start-50 translate-middle badge-subtle-primary">67%</div>
+            </div>
+            <div class="col-4 position-relative"><img class="w-100" src="../assets/img/management/activity-3.png" alt="...">
+              <div class="badge rounded-pill position-absolute top-100 start-50 translate-middle badge-subtle-success">89%</div>
+            </div>
+          </div>
+          <div class="row g-2 mb-4">
+            <div class="col-12 d-flex align-items-center">
+              <div class="avatar avatar-xl rounded-circle">
+                <img class="rounded-circle" src="../assets/img/team/5-thumb.png" alt="">
+              </div>
+              <h6 class="mb-0 ps-2">Jared Dunn</h6>
+            </div>
+            <div class="col-4 position-relative"><img class="w-100" src="../assets/img/management/activity-4.png" alt="...">
+              <div class="badge rounded-pill position-absolute top-100 start-50 translate-middle badge-subtle-success">20%</div>
+            </div>
+            <div class="col-4 position-relative"><img class="w-100" src="../assets/img/management/activity-5.png" alt="...">
+              <div class="badge rounded-pill position-absolute top-100 start-50 translate-middle badge-subtle-danger">67%</div>
+            </div>
+            <div class="col-4 position-relative"><img class="w-100" src="../assets/img/management/activity-6.png" alt="...">
+              <div class="badge rounded-pill position-absolute top-100 start-50 translate-middle badge-subtle-primary">89%</div>
+            </div>
+          </div>
+          <div class="row g-2 mb-4">
+            <div class="col-12 d-flex align-items-center">
+              <div class="avatar avatar-xl rounded-circle">
+                <img class="rounded-circle" src="../assets/img/team/16.jpg" alt="">
+              </div>
+              <h6 class="mb-0 ps-2">Monica Geller</h6>
+            </div>
+            <div class="col-4 position-relative"><img class="w-100" src="../assets/img/management/activity-7.png" alt="...">
+              <div class="badge rounded-pill position-absolute top-100 start-50 translate-middle badge-subtle-danger">20%</div>
+            </div>
+            <div class="col-4 position-relative"><img class="w-100" src="../assets/img/management/activity-8.png" alt="...">
+              <div class="badge rounded-pill position-absolute top-100 start-50 translate-middle badge-subtle-success">67%</div>
+            </div>
+            <div class="col-4 position-relative"><img class="w-100" src="../assets/img/management/activity-9.png" alt="...">
+              <div class="badge rounded-pill position-absolute top-100 start-50 translate-middle badge-subtle-primary">89%</div>
+            </div>
+          </div>
+        </div></div></div></div><div class="simplebar-placeholder" style="width: auto; height: 418px;"></div></div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 296px; transform: translate3d(0px, 0px, 0px); display: block;"></div></div></div>
+        <div class="card-footer bg-body-tertiary p-0">
+          <a class="btn btn-sm btn-link d-block py-2" href="#!">See all projects<svg class="svg-inline--fa fa-chevron-right fa-w-10 ms-1 fs-11" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"></path></svg><!-- <span class="fas fa-chevron-right ms-1 fs-11"></span> Font Awesome fontawesome.com --></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Caso não esteja logado-->
 <% else %>
   <p>Você não está logado</p>
   <p><%= link_to "Registrar-se", new_user_registration_path %>
   <p><%= link_to "Logar", new_user_session_path %>
 <% end %>
+
+

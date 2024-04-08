@@ -23,6 +23,12 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "home#index"
   get 'search', to: 'search#perform'
+  resources :plantoes do
+    member do
+      post 'abrir_plantao'
+      post 'fechar_plantao'
+    end
+  end
  
   # API
   namespace :api do
