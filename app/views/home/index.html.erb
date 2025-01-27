@@ -30,6 +30,9 @@
                   <div class="display-4 fs-5 mb-2 fw-normal font-sans-serif text-info">
                     <% if @plantao_para_check_in.nil? %>
                       <%= "Nenhum" %>
+                      <% if @plantao_para_check_out.nil? %>
+                        <%= link_to "Check-In Avulso", 'Cria login', method: :post, class: "btn btn-success me-1 mb-1" %>
+                      <% end %>
                     <% else %>
                       <small><%= @plantao_para_check_in.inicio.strftime("%d/%m") %> - </small>
                       <%=  @plantao_para_check_in.inicio.strftime("%H:%M") %>

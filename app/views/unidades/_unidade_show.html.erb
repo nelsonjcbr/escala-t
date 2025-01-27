@@ -11,9 +11,12 @@
           <label><%= "#{unidade.equipes.size} Equipes" %></label>
         </div>
         <% unidade.equipes.each do |e| %>
+          <%= turbo_frame_tag e do %>
+      
           <div class="row">
             <%= link_to "#{e.nome} #{e.membros.size} Membros ", equipe_path(e)  %>
           </div>
+          <% end %>
         <% end %>
         <div class="col-12 d-flex justify-content-end">
           <%= link_to "Editar", edit_estabelecimento_unidade_path(estabelecimento, unidade), class: "btn btn-primary me-1 mb-1" %>

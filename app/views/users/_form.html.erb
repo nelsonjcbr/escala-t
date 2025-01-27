@@ -39,6 +39,18 @@
 
   <div class="card mb-3">
     <div class="card-body">
+      <%= f.input :estabelecimento_ids, 
+            collection: @estabelecimentos, 
+            as: :check_boxes, 
+            label: "Estabelecimentos que trabalha", 
+            label_method: :nome, 
+            value_method: :id, 
+            input_html: { class: "form-check-input" } %>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-body">
       <div class="card-title">Registro no conselho</div>
         <div class="row gx-3">
           <%= f.input :conselhoclass_id, 

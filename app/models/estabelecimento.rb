@@ -3,13 +3,13 @@ class Estabelecimento < ApplicationRecord
   belongs_to :cidade, optional: true
   has_many :unidades
   validates :nome, :cnpj, presence: true
-
+  has_many :user_estabelecimentos
+  has_many :users, through: :user_estabelecimentos
   def cidade_uf
-    self.cidade.nome+'('+self.uf.sigla + ')'
+    cidade.nome + '(' + uf.sigla + ')'
   end
 
   def self.search(query)
-    where("nome ilike ?", "%#{query}%")
+    where('nome ilike ?', "%#{query}%")
   end
-
 end
