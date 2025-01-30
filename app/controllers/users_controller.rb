@@ -26,14 +26,12 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
-    @estabelecimentos = Estabelecimento.all
     add_breadcrumb 'Usuários', users_path, title: 'Volta para a lista'
     add_breadcrumb 'Novo'
   end
 
   # GET /users/1/edit
   def edit
-    @estabelecimentos = Estabelecimento.all
     add_breadcrumb 'Usuários', users_path, title: 'Volta para a lista'
     add_breadcrumb @user.nome_chamado, @user
     add_breadcrumb 'Editar', edit_user_path(@user)
@@ -93,6 +91,7 @@ class UsersController < ApplicationController
     @ufs = Uf.order(:nome).collect { |i| [i.nome, i.id] }
     @conselhoclasses = Conselhoclass.ordenado.collect { |i| [i.sigla, i.id] }
     @sexos = [%w[Masculino M], %w[Feminino F]]
+    @estabelecimentos = Estabelecimento.all
   end
 
   # Only allow a list of trusted parameters through.

@@ -22,8 +22,10 @@
     <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
         <div class="navbar-vertical-content scrollbar">
             <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
-                <%= render "layouts/nav_item"%>
-                <%= render "layouts/nav_configuracoes"%>
+                <% if current_user.admin? || current_user.organizer? %>
+                  <%= render "layouts/nav_item"%>
+                  <%= render "layouts/nav_configuracoes"%>
+                <% end %>
             </ul>
         </div>
     </div>

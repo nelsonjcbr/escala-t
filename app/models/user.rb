@@ -8,9 +8,11 @@ class User < ApplicationRecord
   validates_confirmation_of :password
   validates :nome_chamado, :cpf, presence: true
   validates :email, uniqueness: true
+  validates :conselhoclass_id, :numero_conselho, :uf_conselho_id, presence: true
+
   # validate :password_complexity
 
-  has_many :user_estabelecimentos
+  has_many :user_estabelecimentos, dependent: :destroy
   has_many :estabelecimentos, through: :user_estabelecimentos
   has_many :membros, dependent: :destroy
   has_many :equipes, through: :membros

@@ -1,5 +1,5 @@
 <div class="row flex-center min-vh-100 py-6">
-  <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+  <div class="col-sm-10 col-md-8 col-lg-6 col-xl-8 col-xxl-8">
     <a class="d-flex flex-center mb-4" href="<%= root_path%>">
       <span class="font-sans-serif fw-bolder fs-5 d-inline-block"><%= Rails.application.class.module_parent_name %></span>
     </a>
@@ -16,37 +16,101 @@
             </span>
           </div>
         </div>
+
         <%= simple_form_sh(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
           <%= render 'shared/erros_cadastros', registro: resource %>
-          <%= f.input :nome,
+          <%= f.input :role, 
+              as: :radio_buttons,
+              collection: User.roles.map { |key, value| [key.humanize, key] }, 
+              placeholder: "Papel", 
+              label: "Papel do usuário",
+              title: "Papel do usuário nesse aplicativo" %>
+          <%= f.input :name,
                 required: true,
                 autofocus: true,
                 placeholder: "Nome",
-                input_html: { autocomplete: "email" }%>
+                label: "Nome" %>
+          <%= f.input :nome_chamado,
+                required: true,
+                autofocus: true,
+                placeholder: "Nome Chamado", 
+                title: "Nome como é chamado, ex: Dr. João" %>
+          <%= f.input :cpf,
+                required: true,
+                autofocus: true,
+                placeholder: "CPF",
+                label: "CPF",
+                input_html: { autocomplete: "false", maxlength: 11 } %>
           <%= f.input :email,
                 required: true,
                 autofocus: true,
                 placeholder: "Email",
-                input_html: { autocomplete: "email" }%>
-          <div class="row gx-2">
-            <%= f.input :password,
-                        required: true,
-                        placeholder: "Senha",
-                        input_html: { autocomplete: "new-password" },
-                        wrapper_html: { class: 'col-sm-6' } %>
-            <%= f.input :password_confirmation,
-                        required: true,
-                        placeholder: "Confirmação",
-                        input_html: { autocomplete: "new-password" },
-                        wrapper_html: { class: 'col-sm-6' } %>
-          </div>
-          
-          <div class="row flex-between-center">
-            <div class="col-auto">
-              <%#= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+                input_html: { autocomplete: "false" } %>
+          <%= f.input :sexo, 
+                as: :radio_buttons,
+                collection: [%w[Masculino M], %w[Feminino F]], 
+                placeholder: "Sexo" %>
+          <%= f.input :profissao, 
+                autofocus: true, 
+                placeholder: "Profissão" %>
+
+          <div class="card mb-3">
+            <div class="card-body">
+              <%= f.input :estabelecimento_ids, 
+                    collection: Estabelecimento.all, 
+                    as: :check_boxes, 
+                    label: "Estabelecimentos que trabalha", 
+                    label_method: :nome, 
+                    value_method: :id, 
+                    input_html: { class: "form-check-input" } %>
             </div>
           </div>
 
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="card-title">Registro no conselho</div>
+                <div class="row gx-3">
+                  <%= f.input :conselhoclass_id, 
+                        collection: Conselhoclass.ordenado.collect { |i| [i.sigla, i.id] }, 
+                        placeholder: "",
+                        label: "Conselho Classe",
+                        wrapper_html: { class: 'col-sm-5' } %>
+                  <%= f.input :numero_conselho,
+                        autofocus: true, 
+                        placeholder: "",
+                        title: "Número de registro no conselho profissional",
+                        wrapper_html: { class: 'col-sm-4' } %>
+                  <%= f.input :uf_conselho_id, 
+                        collection: Uf.order(:nome).collect { |i| [i.nome, i.id] }, 
+                        placeholder: "UF",
+                        title: "UF do conselho do registro",
+                        wrapper_html: { class: 'col-sm-3' } %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-3 border h-100 border-warning">
+            <div class="card-body">
+              <div class="card-title">Autenticação<small class="text-warning"> (só altere se necessário)</small></div>
+                <div class="row gx-2">
+                  <%= f.input :password,
+                              required: true,
+                              placeholder: "Senha",
+                              input_html: { autocomplete: "off" },
+                              wrapper_html: { class: 'col-sm-6' } %>
+                  <%= f.input :password_confirmation,
+                              required: true,
+                              placeholder: "Confirmação",
+                              input_html: { autocomplete: "off" },
+                              wrapper_html: { class: 'col-sm-6' } %>
+                </div>
+              </div>
+            </div>
+          </div> 
+          <%= f.input :foto, 
+                input_html: { direct_upload: true } %>
+          
           <div class="col-auto">                          
             <%= render "devise/shared/link_esqueceu_senha"%>
           </div>
