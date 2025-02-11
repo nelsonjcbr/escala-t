@@ -25,8 +25,10 @@ Rails.application.routes.draw do
   get 'search', to: 'search#perform'
   resources :plantoes do
     member do
-      post 'abrir_plantao'
-      post 'fechar_plantao'
+      # post 'abrir_plantao'
+      # post 'fechar_plantao'
+      get 'abrir_plantao'
+      get 'fechar_plantao'
     end
   end
 

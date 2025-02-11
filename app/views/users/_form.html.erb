@@ -32,6 +32,8 @@
   <%= f.input :sexo, 
         as: :radio_buttons,
         collection: @sexos, 
+        label_method: :first, 
+        value_method: :second,
         placeholder: "Sexo" %>
   <%= f.input :profissao, 
         autofocus: true, 

@@ -90,7 +90,13 @@ class UsersController < ApplicationController
   def set_selects
     @ufs = Uf.order(:nome).collect { |i| [i.nome, i.id] }
     @conselhoclasses = Conselhoclass.ordenado.collect { |i| [i.sigla, i.id] }
-    @sexos = [%w[Masculino M], %w[Feminino F]]
+    # @sexos = [%w[Masculino M], %w[Feminino F], %w[Indeterminado I], %w[Não declarado N]]
+    @sexos = [
+      ['Masculino', 'M'],
+      ['Feminino', 'F'],
+      ['Indeterminado', 'I'],
+      ['Não declarado', 'N']
+    ]
     @estabelecimentos = Estabelecimento.all
   end
 

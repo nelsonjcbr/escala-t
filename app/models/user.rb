@@ -16,6 +16,7 @@ class User < ApplicationRecord
   has_many :estabelecimentos, through: :user_estabelecimentos
   has_many :membros, dependent: :destroy
   has_many :equipes, through: :membros
+  has_many :escalamembros, foreign_key: 'membro_id'
   belongs_to :conselhoclass
   belongs_to :uf, class_name: 'Uf', foreign_key: 'uf_conselho_id'
 

@@ -10,7 +10,6 @@
     </div>
   </div>
 
-
   <%= form_with url: escalacmpt_path(@escalacmpt), 
                 method: :get, 
                 data: { turbo_frame: 'escalacmpt_body' } do |f| %>
@@ -19,7 +18,7 @@
         <div class="input-group mb-3 ms-3">
           <%= f.select :membro_id, 
                 options_for_select(@membros, params[:membro_id]), 
-                { prompt: "Selecione um membro..."}, 
+                { prompt: "Filtre um membro da equipe..."}, 
                 { class: "form-control", placeholder: "Membro", title: "Membro" } %>
           <div class="input-group-append">
             <%= f.button :submit, class: "btn btn-outline-secondary" do %>
@@ -34,7 +33,8 @@
           <%= link_to "Resumo", escalacmpt_resumo_path(@escalacmpt), data: { turbo_frame: "resumo_frame" }, class: "btn btn--primary" %>
         <% end %>
       </div>
-    </div>
+    </div>                      <br/>
+
   <% end %>
 
   <div id="escala">
@@ -42,11 +42,11 @@
         <thead>
           <tr>
             <th width=14%><div class="badge bg-danger">Domingo</div></th>
-            <th width=14%><div class="badge bg-warning">Segunda</div></th>
-            <th width=14%><div class="badge bg-dark">Terça</div></th>
-            <th width=14%><div class="badge bg-info">Quarta</div></th>
-            <th width=14%><div class="badge bg-primary">Quinta</div></th>
-            <th width=14%><div class="badge bg-success">Sexta</div></th>
+            <th width=14%><div class="badge bg-secondary">Segunda</div></th>
+            <th width=14%><div class="badge bg-secondary">Terça</div></th>
+            <th width=14%><div class="badge bg-secondary">Quarta</div></th>
+            <th width=14%><div class="badge bg-secondary">Quinta</div></th>
+            <th width=14%><div class="badge bg-secondary">Sexta</div></th>
             <th width=14%><div class="badge bg-danger">Sábado</div></th>
           </tr>
         </thead>
@@ -67,16 +67,16 @@
                 <b><%= d.data.day.to_s %></b>
               </div>
               <% d.escalas.each do |t| %>
-                <span class="fw-bold">
-                  <br/>
-                  <%= "Inicio: #{t.turno.hora_inicio.hour}h" %>
-                </span>
+                <div class="text-end small" >
+                  <i class="fas fa-clock me-2"></i>
+                  <%= t.turno.hora_inicio.strftime("%H:%M") %>
+                </div>
                 <% t.escalamembros.each do |m| %>
                   <% unless params[:membro_id].present? && params[:membro_id].to_i != m.membro_id %>
                     <span class="fst-italic">
-                      <br/>
                       <%= image_tag m.membro.foto_url, size: "20x20" if m.membro.foto_data %>
                       <%= m.membro.nome_chamado %>
+                      <br/>
                     </span> 
                   <% end %>
                 <% end %>
