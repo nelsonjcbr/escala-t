@@ -23,5 +23,6 @@ module EscalaT
     I18n.config.available_locales = 'pt-BR'
     I18n.default_locale = 'pt-BR'
     I18n.locale = 'pt-BR'
+    config.log_formatter = Logger::Formatter.new
   end
 end

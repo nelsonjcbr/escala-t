@@ -26,12 +26,14 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @user.fones.build
     add_breadcrumb 'Usuários', users_path, title: 'Volta para a lista'
     add_breadcrumb 'Novo'
   end
 
   # GET /users/1/edit
   def edit
+    @user.fones.build
     add_breadcrumb 'Usuários', users_path, title: 'Volta para a lista'
     add_breadcrumb @user.nome_chamado, @user
     add_breadcrumb 'Editar', edit_user_path(@user)
@@ -104,6 +106,7 @@ class UsersController < ApplicationController
   def user_params
     # params.fetch(:user, {})
     params.require(:user).permit(:name, :email, :password, :nome_chamado, :cpf, :sexo, :profissao, :conselhoclass_id,
-                                 :numero_conselho, :uf_conselho_id, :foto, :role, estabelecimento_ids: [])
+                                 :numero_conselho, :uf_conselho_id, :foto, :role, estabelecimento_ids: [],
+                                                                                  fones_attributes: %i[id numero_ddd numero_telefone obs _destroy])
   end
 end

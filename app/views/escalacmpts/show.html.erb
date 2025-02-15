@@ -4,8 +4,7 @@
   <div class="card-header">
     <div class="row flex-between-end">
       <div class="col-12 order-md-1 order-last">
-        <h3>Escala plantão equipe: <%= @escalacmpt.equipe.nome %></h3>
-        <p class="text-subtitle text-muted">Escala do mês <%= @escalacmpt.cmpt_formatada %>.</p>
+        <h3>Escala equipe <%= @escalacmpt.equipe.nome  %> </h3>
       </div>
     </div>
   </div>
@@ -13,7 +12,12 @@
   <%= form_with url: escalacmpt_path(@escalacmpt), 
                 method: :get, 
                 data: { turbo_frame: 'escalacmpt_body' } do |f| %>
-    <div class="row">    
+    <div class="row align-items-center">    
+      <div class="col-md-2 col-12">
+        <div class="ms-3 mb-3 text-subtitle">
+          Escala mês <b><%= @escalacmpt.cmpt_formatada %></b>
+        </div>
+      </div>
       <div class="col-md-4 col-12">
         <div class="input-group mb-3 ms-3">
           <%= f.select :membro_id, 
@@ -25,20 +29,23 @@
               <%= content_tag :i, "", class: "fas fa-search" %>
             <% end %>
           </div>
+
         </div>
       </div>
 
-      <div class="col-md-6 col-12">
-        <%= turbo_frame_tag "resumo_frame", target: "_top" do %>
-          <%= link_to "Resumo", escalacmpt_resumo_path(@escalacmpt), data: { turbo_frame: "resumo_frame" }, class: "btn btn--primary" %>
-        <% end %>
+      <div class="col-md-5 col-12">
+        <div class="mb-3">
+          <%= turbo_frame_tag "resumo_frame", target: "_top" do %>
+            <%= link_to "Resumo", escalacmpt_resumo_path(@escalacmpt), data: { turbo_frame: "resumo_frame" }, class: "btn btn--primary" %>
+          <% end %>
+        </div>
       </div>
-    </div>                      <br/>
+    </div>                 
 
   <% end %>
 
   <div id="escala">
-      <table class="table table-bordered" width="50%">
+      <table class="table table-bordered" width="80%">
         <thead>
           <tr>
             <th width=14%><div class="badge bg-danger">Domingo</div></th>

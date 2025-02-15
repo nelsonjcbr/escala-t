@@ -14,3 +14,9 @@ ngrok http 3000
 Kamatera
 root: Kncfaaa12345a@
 nelson: ncfaaa34
+
+
+Instalando o stimulus-rails-nested-form
+$ bin/importmap pin stimulus-rails-nested-form
+
+

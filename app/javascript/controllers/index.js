@@ -4,11 +4,18 @@
 
 import { application } from "./application"
 
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)
+// Eager load all controllers defined in the import map under controllers/**/*_controller
+import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
+eagerLoadControllersFrom("controllers", application)
 
-import SlimController from "./slim_controller"
-application.register("slim", SlimController)
+//import HelloController from "./hello_controller"
+//application.register("hello", HelloController)
 
-import UfController from "./uf_controller"
-application.register("uf", UfController)
+//import SlimController from "./slim_controller"
+//application.register("slim", SlimController)
+
+//import UfController from "./uf_controller"
+//application.register("uf", UfController)
+
+//import NestedFormController from "./nested_form_copia_controller"
+//application.register("nested_form", NestedFormController)

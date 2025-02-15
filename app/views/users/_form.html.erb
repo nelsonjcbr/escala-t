@@ -1,4 +1,6 @@
-<%= simple_form_sh @user do |f| %> 
+<%= simple_form_sh @user , 
+      html: { data: { controller: "nested-form", 
+                      nested_form_wrapper_selector_value: '.nested-form-wrapper'} } do |f| %> 
 
   <%= render "shared/erros_cadastros", registro: @user %>
 
@@ -29,6 +31,35 @@
         autofocus: true,
         placeholder: "Email",
         input_html: { autocomplete: "false" } %>
+ 
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="card-title">Telefones</div>
+        <div data-nested-form-target="container">
+          <%= f.simple_fields_for :fones do |fone_fields| %>
+            <%= render "fone_fields", f: fone_fields %>
+          <% end %>
+
+          <!-- Template para novos telefones -->
+          <template data-nested-form-target="template">
+            <%= f.simple_fields_for :fones, Fone.new, child_index: "NEW_RECORD" do |fone| %>
+              <%= render 'fone_fields', f: fone %>
+            <% end %>
+          </template>
+          <!-- Inserted elements will be injected before that target. -->
+          <div data-nested-form-target="target"></div>
+          <!-- <button type="button" data-action="nested-form#add">Add</button> -->
+          <%= link_to "+ Fones", "javascript:void(0)", 
+              data: { action: "click->nested-form#add" },
+              class: "btn btn-success mb-3" %>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
   <%= f.input :sexo, 
         as: :radio_buttons,
         collection: @sexos, 

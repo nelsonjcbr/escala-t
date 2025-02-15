@@ -1,10 +1,11 @@
 class Escalacmpt < ApplicationRecord
   belongs_to :equipe
-  has_many :escaladays, dependent: :destroy 
+  has_many :escaladays, dependent: :destroy
+  validates :equipe_id, uniqueness: { scope: :cmpt, message: 'já existe para essa competência' }
   after_create :gera_escalas_cmpt
 
   def self.search(query)
-    joins(:equipe).where("cmpt::varchar ilike ? or equipes.nome ilike ?", "%#{query}%", "%#{query}%")
+    joins(:equipe).where('cmpt::varchar ilike ? or equipes.nome ilike ?', "%#{query}%", "%#{query}%")
   end
 
   def cmpt_formatada
@@ -18,52 +19,53 @@ class Escalacmpt < ApplicationRecord
   end
 
   def gera_escalas_cmpt
-    ano = self.cmpt.to_s[0..3].to_i
-    mes = self.cmpt.to_s[4..5].to_i
+    ano = cmpt.to_s[0..3].to_i
+    mes = cmpt.to_s[4..5].to_i
     dia = 1
     # Grava um registro para cada dia
-    while Date.valid_date?(ano, mes, dia) do
+    while Date.valid_date?(ano, mes, dia)
       data = Date.new(ano, mes, dia)
-      d = Escaladay.new(escalacmpt_id: self.id, data: data)
+      d = Escaladay.new(escalacmpt_id: id, data: data)
       d.save!
       # Grava um registro para cada turno da equipe no dia
-      self.equipe.turnos.each do |t| 
-        e = Escala.new()
+      equipe.turnos.each do |t|
+        e = Escala.new
         e.escaladay_id = d.id
-        e.turno_id = t.id 
+        e.turno_id = t.id
         e.save!
       end
       dia += 1
     end
   end
 
-  def update_membro (atributos)
-    # Vem o individuo e os dias marcados para sua escala 
+  def update_membro(atributos)
+    # Vem o individuo e os dias marcados para sua escala
     atrib_json = JSON.parse(atributos.to_json)
-    membro_id = atrib_json["membro_id"]
-    dias_marcados = atrib_json["escalas_attributes"]
+    membro_id = atrib_json['membro_id']
+    dias_marcados = atrib_json['escalas_attributes']
     unless dias_marcados.nil?
       if membro_id == ''
         # Testando para ver se retorna erro
         return
       end
+
       escalas = dias_marcados.keys.map { |k| k }
       escalas.each do |p|
-        if (Escalamembro.where(escala_id: p, membro_id: membro_id).size == 0)
+        if Escalamembro.where(escala_id: p, membro_id: membro_id).size == 0
           salvo = Escalamembro.create(escala_id: p, membro_id: membro_id)
         end
       end
-    end  
+    end
     # Pega o escalamembros_attributes que é onde fica os ids dos registros marcados para exclusão
     # Retorna algo assim: {"9"=>{"excluir"=>"1"}, "10"=>{"excluir"=>"1"}}
-    excluir = atrib_json["escalamembros_attributes"]
+    excluir = atrib_json['escalamembros_attributes']
     unless excluir.nil?
       escalamembros = excluir.keys.map { |k| k }
       escalamembros.each do |p|
         membro = Escalamembro.find(p)
         membro.destroy unless membro.nil?
-      end  
+      end
     end
-    return true
+    true
   end
 end

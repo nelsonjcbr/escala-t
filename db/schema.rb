@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_27_020727) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_15_143835) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -63,6 +63,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_27_020727) do
     t.integer "cmpt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["equipe_id", "cmpt"], name: "index_escalacmpts_equipe_cmpt", unique: true
     t.index ["equipe_id"], name: "index_escalacmpts_on_equipe_id"
   end
 
@@ -109,6 +110,16 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_27_020727) do
     t.integer "unidades_count"
     t.index ["cidade_id"], name: "index_estabelecimentos_on_cidade_id"
     t.index ["uf_id"], name: "index_estabelecimentos_on_uf_id"
+  end
+
+  create_table "fones", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "numero_ddd"
+    t.string "numero_telefone"
+    t.string "obs"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_fones_on_user_id"
   end
 
   create_table "membros", force: :cascade do |t|
@@ -190,13 +201,14 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_27_020727) do
   add_foreign_key "cidades", "ufs"
   add_foreign_key "equipes", "unidades"
   add_foreign_key "escalacmpts", "equipes"
-  add_foreign_key "escaladays", "escalacmpts"
-  add_foreign_key "escalamembros", "escalas"
+  add_foreign_key "escaladays", "escalacmpts", on_delete: :cascade
+  add_foreign_key "escalamembros", "escalas", on_delete: :cascade
   add_foreign_key "escalamembros", "users", column: "membro_id"
-  add_foreign_key "escalas", "escaladays"
+  add_foreign_key "escalas", "escaladays", on_delete: :cascade
   add_foreign_key "escalas", "turnos"
   add_foreign_key "estabelecimentos", "cidades"
   add_foreign_key "estabelecimentos", "ufs"
+  add_foreign_key "fones", "users"
   add_foreign_key "membros", "equipes"
   add_foreign_key "membros", "users"
   add_foreign_key "turnos", "equipes"

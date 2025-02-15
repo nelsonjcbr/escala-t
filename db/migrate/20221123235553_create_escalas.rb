@@ -15,7 +15,7 @@ class CreateEscalas < ActiveRecord::Migration[7.0]
     end
     create_table :escalamembros do |t|
       t.references :escala, null: false, foreign_key: true
-      t.references :membro, null: false, foreign_key: true
+      t.references :membro, null: false, foreign_key: { to_table: :users }
     end
   end
 end
