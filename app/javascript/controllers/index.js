@@ -17,5 +17,8 @@ eagerLoadControllersFrom("controllers", application)
 //import UfController from "./uf_controller"
 //application.register("uf", UfController)
 
-//import NestedFormController from "./nested_form_copia_controller"
+//import NestedFormController from "./nested_form_controller"
 //application.register("nested_form", NestedFormController)
+
+// import UserFormToggle_controller from "./user_form_toggle_controller"
+// application.register("user_form_toggle", UserFormToggleController)

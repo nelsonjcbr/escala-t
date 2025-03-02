@@ -11,7 +11,7 @@ class CreateEscalas < ActiveRecord::Migration[7.0]
     end
     create_table :escalas do |t|
       t.references :escaladay, null: false, foreign_key: true
-      t.references :turno, null: false, foreign_key: true
+      t.references :turno, null: false, foreign_key: { on_update: :cascade, on_delete: :restrict }
     end
     create_table :escalamembros do |t|
       t.references :escala, null: false, foreign_key: true

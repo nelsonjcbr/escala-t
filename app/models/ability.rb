@@ -15,9 +15,10 @@ class Ability
       can :manage, Membro
       can :manage, Unidade
       can :manage, User
+      can :manage, Userconf
     elsif user.user?
       can :read, Escalacmpt
-      can [:read, :update, :destroy], User, id: user.id
+      can %i[read update destroy], User, id: user.id
     end
   end
 end

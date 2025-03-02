@@ -43,16 +43,20 @@ class Escalacmpt < ApplicationRecord
     atrib_json = JSON.parse(atributos.to_json)
     membro_id = atrib_json['membro_id']
     dias_marcados = atrib_json['escalas_attributes']
+    @errors = []
     unless dias_marcados.nil?
       if membro_id == ''
         # Testando para ver se retorna erro
-        return
+        return @errors
       end
 
       escalas = dias_marcados.keys.map { |k| k }
       escalas.each do |p|
         if Escalamembro.where(escala_id: p, membro_id: membro_id).size == 0
-          salvo = Escalamembro.create(escala_id: p, membro_id: membro_id)
+          escalamembro = Escalamembro.new(escala_id: p, membro_id: membro_id)
+          unless escalamembro.save
+            @errors << escalamembro.errors.full_messages.join(', ')
+          end
         end
       end
     end
@@ -65,7 +69,7 @@ class Escalacmpt < ApplicationRecord
         membro = Escalamembro.find(p)
         membro.destroy unless membro.nil?
       end
-    end
-    true
+    end 
+    @errors
   end
 end

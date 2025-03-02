@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   # devise_for :users
   devise_for :users, controllers: { registrations: 'users/registrations' }
-  resources :users
+  resources :users do
+    member do
+      get :edit_user_conf
+      patch :update_user_conf
+    end
+  end
   resources :escalacmpts do
     resources :escaladays
     get 'resumo'

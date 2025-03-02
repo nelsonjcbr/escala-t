@@ -53,13 +53,18 @@ class EscalacmptsController < ApplicationController
   # PATCH/PUT /escalacmpts/1 or /escalacmpts/1.json
   def update
     respond_to do |format|
-      if @escalacmpt.update_membro(params[:escalacmpt])
+      errors = @escalacmpt.update_membro(params[:escalacmpt])
+      if errors.empty?
         format.html { redirect_to edit_escalacmpt_url(@escalacmpt), notice: 'Escala gravada com sucesso.' }
         format.json { render :show, status: :ok, location: @escalacmpt }
       else
-        flash[:notice] = 'ERRO: Existe adição de um profissional em um turno mas o profissional não está selecionado'
+        # flash[:notice] = 'ERRO: Existe adição de um profissional em um turno mas o profissional não está selecionado'
         # flash.now[:alert] = 'Existe adição de um profissional em um turno mas o profissional não está selecionado'
-        format.html { render :edit, status: :unprocessable_entity }
+        # flash[:alert] = "Erro ao atualizar escala: #{errors.join(', ')}"
+        format.html do
+          redirect_to edit_escalacmpt_url(@escalacmpt), alert: "Erro ao atualizar escala: #{errors.join(', ')}"
+        end
+        # format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @escalacmpt.errors, status: :unprocessable_entity }
       end
     end

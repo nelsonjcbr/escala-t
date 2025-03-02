@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_02_15_143835) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_15_210225) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -173,6 +173,20 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_15_143835) do
     t.index ["user_id"], name: "index_user_estabelecimentos_on_user_id"
   end
 
+  create_table "user_indisps", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "tipo", null: false
+    t.date "data_inicio"
+    t.date "data_fim"
+    t.string "dia_semana"
+    t.time "hora_inicio"
+    t.time "hora_fim"
+    t.string "obs"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_indisps_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -192,6 +206,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_15_143835) do
     t.jsonb "foto_data"
     t.integer "role"
     t.string "api_token"
+    t.integer "horas_semana"
     t.index ["conselhoclass_id"], name: "index_users_on_conselhoclass_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -215,6 +230,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_15_143835) do
   add_foreign_key "unidades", "estabelecimentos"
   add_foreign_key "user_estabelecimentos", "estabelecimentos"
   add_foreign_key "user_estabelecimentos", "users"
+  add_foreign_key "user_indisps", "users"
   add_foreign_key "users", "conselhoclasses"
   add_foreign_key "users", "ufs", column: "uf_conselho_id"
 end

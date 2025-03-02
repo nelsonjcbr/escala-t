@@ -26,6 +26,15 @@
         placeholder: "CPF",
         label: "CPF",
         input_html: { autocomplete: "false", maxlength: 11 } %>
+  <%= f.input :sexo, 
+        as: :radio_buttons,
+        collection: @sexos, 
+        label_method: :first, 
+        value_method: :second,
+        placeholder: "Sexo" %>
+  <%= f.input :profissao, 
+        autofocus: true, 
+        placeholder: "Profissão" %>
   <%= f.input :email,
         required: true,
         autofocus: true,
@@ -60,28 +69,6 @@
 
   </div>
 
-  <%= f.input :sexo, 
-        as: :radio_buttons,
-        collection: @sexos, 
-        label_method: :first, 
-        value_method: :second,
-        placeholder: "Sexo" %>
-  <%= f.input :profissao, 
-        autofocus: true, 
-        placeholder: "Profissão" %>
-
-  <div class="card mb-3">
-    <div class="card-body">
-      <%= f.input :estabelecimento_ids, 
-            collection: @estabelecimentos, 
-            as: :check_boxes, 
-            label: "Estabelecimentos que trabalha", 
-            label_method: :nome, 
-            value_method: :id, 
-            input_html: { class: "form-check-input" } %>
-    </div>
-  </div>
-
   <div class="card mb-3">
     <div class="card-body">
       <div class="card-title">Registro no conselho</div>
@@ -103,6 +90,18 @@
                 wrapper_html: { class: 'col-sm-3' } %>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <%= f.input :estabelecimento_ids, 
+            collection: @estabelecimentos, 
+            as: :check_boxes, 
+            label: "Estabelecimentos que trabalha", 
+            label_method: :nome, 
+            value_method: :id, 
+            input_html: { class: "form-check-input" } %>
     </div>
   </div>
 

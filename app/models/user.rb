@@ -19,6 +19,8 @@ class User < ApplicationRecord
   has_many :escalamembros, foreign_key: 'membro_id'
   has_many :fones, dependent: :destroy
   accepts_nested_attributes_for :fones, allow_destroy: true
+  has_many :user_indisps, dependent: :destroy
+  accepts_nested_attributes_for :user_indisps, allow_destroy: true
   belongs_to :conselhoclass
   belongs_to :uf, class_name: 'Uf', foreign_key: 'uf_conselho_id'
 

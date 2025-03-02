@@ -45,16 +45,16 @@
   <% end %>
 
   <div id="escala">
-      <table class="table table-bordered" width="80%">
-        <thead>
+      <table class="table table-bordered table-striped" width="80%">
+        <thead class="table-secondary">
           <tr>
-            <th width=14%><div class="badge bg-danger">Domingo</div></th>
-            <th width=14%><div class="badge bg-secondary">Segunda</div></th>
-            <th width=14%><div class="badge bg-secondary">Terça</div></th>
-            <th width=14%><div class="badge bg-secondary">Quarta</div></th>
-            <th width=14%><div class="badge bg-secondary">Quinta</div></th>
-            <th width=14%><div class="badge bg-secondary">Sexta</div></th>
-            <th width=14%><div class="badge bg-danger">Sábado</div></th>
+            <th class="text-center" width=14%><div class="badge bg-danger">Domingo</div></th>
+            <th class="text-center" width=14%><div class="badge bg-secondary">Segunda</div></th>
+            <th class="text-center" width=14%><div class="badge bg-secondary">Terça</div></th>
+            <th class="text-center" width=14%><div class="badge bg-secondary">Quarta</div></th>
+            <th class="text-center" width=14%><div class="badge bg-secondary">Quinta</div></th>
+            <th class="text-center" width=14%><div class="badge bg-secondary">Sexta</div></th>
+            <th class="text-center" width=14%><div class="badge bg-danger">Sábado</div></th>
           </tr>
         </thead>
         <tbody>
@@ -81,7 +81,7 @@
                 <% t.escalamembros.each do |m| %>
                   <% unless params[:membro_id].present? && params[:membro_id].to_i != m.membro_id %>
                     <span class="fst-italic">
-                      <%= image_tag m.membro.foto_url, size: "20x20" if m.membro.foto_data %>
+                      <%= image_tag m.membro.foto_url, size: "20x20", class: "rounded-circle" if m.membro.foto_data %>
                       <%= m.membro.nome_chamado %>
                       <br/>
                     </span> 
@@ -96,16 +96,11 @@
         </tbody>
       </table>
       <% if can? :manage, @escalacmpt %>
-        <div class="card">
-          <div class="row match-height">
-            <div class="col-1">
-              <%= link_to "Editar", edit_escalacmpt_path(@escalacmpt), class: "btn btn-primary me-1 mb-1" %>
-            </div>
-            <div class="col-1">
-              <%= button_to "Excluir", @escalacmpt, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger me-1 mb-1" %>
-            </div>
-          </div>
+        <div class="col-12 d-flex justify-content-end">
+          <%= link_to "Editar", edit_escalacmpt_path(@escalacmpt), class: "btn btn-primary me-1 mb-1" %>
+          <%= button_to "Excluir", @escalacmpt, form: { data: { turbo_confirm: "Você tem certeza que deseja excluir?" } }, method: :delete,  class: "btn btn-danger me-1 mb-1" %>
         </div>
       <% end %>
+    </div>
   </div>
 </div>

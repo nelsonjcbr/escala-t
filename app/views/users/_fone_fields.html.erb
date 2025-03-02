@@ -1,5 +1,5 @@
 <div class="nested-form-wrapper" data-new-record="<%= f.object.new_record? %>">
-  <div class="row gx-1">
+  <div class="row gx-1 align-items-center">
     <%= f.input :numero_ddd, 
                 autofocus: true, 
                 input_html: { autocomplete: "false", maxlength: 2 },
@@ -24,7 +24,7 @@
     <div class="col-sm-2">
       <%= link_to "Remove", "javascript:void(0)", 
           data: { action: "click->nested-form#remove" },
-          class: "btn btn-danger btn-sm" %>
+          class: "btn btn-danger btn-sm ms-2" %>
     </div>
 
   </div>
