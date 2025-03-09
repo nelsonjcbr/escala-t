@@ -94,6 +94,26 @@ class EscalacmptsController < ApplicationController
       ")
   end
 
+  def atualizar_formulario
+    @user = User.find_by(id: params[:user_id])
+    @escalacmpt = Escalacmpt.find params[:id]
+
+    # Cria um hash com a disponibilidade de cada escala
+    @disponibilidade = {}
+    @escalacmpt.escaladays.each do |escaladay|
+      escaladay.escalas.each do |escala|
+        @disponibilidade[escala.id] = escala.disponivel?(@user.id)
+      end
+    end
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('escala', partial: 'escala',
+                                                            locals: { user: @user, disponibilidade: @disponibilidade })
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

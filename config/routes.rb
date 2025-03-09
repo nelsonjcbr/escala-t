@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   resources :escalacmpts do
     resources :escaladays
     get 'resumo'
+    member do
+      get 'atualizar_formulario'
+    end
   end
+
   resources :equipes do
     resources :membros
   end

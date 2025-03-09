@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <%= form_with model: @escalacmpt, data: { turbo: false } do |form| %>
+  <%= form_with model: @escalacmpt, data: { turbo: false, controller: "disponibilidade", escalacmpt_id: @escalacmpt.id } do |form| %>
     <% if @escalacmpt.errors.any? %>
       <div style="color: red">
         <h2><%= pluralize(@escalacmpt.errors.count, "error") %> prohibited this escalacmpt from being saved:</h2>
@@ -25,70 +25,16 @@
 
     <div class="row">
       <div class="col-md-6 ms-3">
-        <%= form.select :membro_id, @membros, { prompt: "Selecione um membro para inserir escala..."}, { class: "form-control text-muted", placeholder: "Membro", title: "Membro" } %>
+        <%= form.select :membro_id, @membros, 
+                        { prompt: "Selecione um membro para inserir escala..."}, 
+                        { class: "form-control", placeholder: "Membro", title: "Membro", data: { action: "change->disponibilidade#verificarDisponibilidade" } } %>
       </div>
       <div class="col-md-12 mb-3 ms-3">
         <small class="text-muted">Selecione um membro, marque os dias e turnos de sua escala e grave. Você também pode clicar no X e excluir um membro da escala</small>
       </div>
       <p>
       <div id="escala">
-        <table class="table table-bordered table-striped table-sm">
-          <thead class="table-secondary">       
-            <tr>
-              <th class="text-center"><div class="badge bg-danger">Domingo</div></th>
-              <th class="text-center"><div class="badge bg-secondary">Segunda</div></th>
-              <th class="text-center"><div class="badge bg-secondary">Terça</div></th>
-              <th class="text-center"><div class="badge bg-secondary">Quarta</div></th>
-              <th class="text-center"><div class="badge bg-secondary">Quinta</div></th>
-              <th class="text-center"><div class="badge bg-secondary">Sexta</div></th>
-              <th class="text-center"><div class="badge bg-danger">Sábado</div></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% coluna = 0 %>
-            
-            <tr>
-              <% @escalacmpt.escaladays.each_with_index do |d, i| %>
-                <% if i == 0 && d.data.wday != 0 %>
-                  <% d.data.wday.times do %>
-                    <td class="align-top text-center"></td>
-                  <% end %>
-                <% end %>
-                <% if d.data.wday == 0 && i != 0 %>
-                  </tr><tr>
-                <% end %>
-                <td class="align-top text-center">
-                  <div class="badge bg-primary">
-                    <b><%= d.data.day.to_s %></b>
-                  </div>
-                  <% d.escalas.each do |t| %>
-                    <div class="form-check">
-                      <%= check_box_tag "escalacmpt[escalas_attributes[#{t.id}][marcado]]", t.id, false, options = { class: "form-check-input form-check-success" } %>
-                      <span class="small">
-                        <%= label_tag "escalacmpt[escalas_attributes[#{t.id}][marcado]]" do %>
-                          <i class="fas fa-clock"></i> <%= t.turno.hora_inicio.strftime("%H:%M") %>
-                        <% end %>
-                      </span>
-                    </div>
-                    <% t.escalamembros.each do |m| %>
-                      <div class="d-grid gap-2">
-                        <%= check_box_tag "escalacmpt[escalamembros_attributes[#{m.id}][excluir]]", m.id, false, options = { class: "btn-check" } %>
-                        <%= label_tag "escalacmpt[escalamembros_attributes[#{m.id}][excluir]", class: "btn btn-outline-secondary btn-sm" do %>
-                          <i class="fas fa-trash"></i> 
-                          <span class="fst-italic">
-                            <%= image_tag m.membro.foto_url, size: "20x20", class: "rounded-circle" if m.membro.foto_data %>
-                            <%= m.membro.nome_chamado %>
-                          </span> 
-                        <% end %>                      
-                      </div>
-                    <% end %>
-                  <% end %>
-                </td>
-                <% coluna += 1 %>
-              <% end %>
-              </tr>
-           </tbody>
-          </table>
+        <%= render partial: "escala", locals: { user_id: nil, disponibilidade: {} } %>
       </div>
       <div class="col-12 d-flex justify-content-end">
         <%= form.submit "Gravar", class: "btn btn-primary me-1 mb-1" %>

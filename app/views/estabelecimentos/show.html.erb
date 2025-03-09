@@ -21,3 +21,16 @@
   </div>
 </div>
 
+  <script>
+    console.log("carregou JS");
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        console.log("Latitude: " + position.coords.latitude);
+        console.log("Longitude: " + position.coords.longitude);
+      }, function(error) {
+        console.log("Erro na geolocalização: ", error);
+      });
+    } else {
+      console.log("Geolocalização não é suportada neste navegador.");
+    }
+  </script>
